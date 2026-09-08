@@ -1,0 +1,13 @@
+﻿:root {
+  font-family: system-ui, 'Segoe UI', 'Malgun Gothic', sans-serif;
+  color: #222;
+  background: #fff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+}

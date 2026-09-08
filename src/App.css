@@ -1,0 +1,20 @@
+﻿.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.layout {
+  width: min(1160px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.main {
+  flex: 1;
+}
+
+.section {
+  min-height: 60svh;
+  padding-block: 48px;
+  scroll-margin-top: 24px;
+}
