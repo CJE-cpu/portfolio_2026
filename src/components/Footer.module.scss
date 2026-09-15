@@ -1,3 +1,2 @@
-﻿.footer {
-  min-height: 80px;
-}
+@use '../styles' as s;
+.footer { display: flex; justify-content: space-between; gap: 16px; padding-block: 28px; color: #61728a; font: 12px ui-monospace, monospace; }

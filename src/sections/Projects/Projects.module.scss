@@ -1,85 +1,18 @@
-.project_container {
-  display: grid;
-  gap: 32px;
-}
-
-.projects {
-  display: grid;
-  gap: 24px;
-}
-
-.projectCard {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  overflow: hidden;
-  border: 1px solid #dce6eb;
-  border-radius: 16px;
-  background: #fffefa;
-}
-
-.imagePlaceholder {
-  min-height: 240px;
-  background: #edf4f7;
-  border-right: 1px solid #dce6eb;
-}
-
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 24px;
-  min-width: 0;
-  padding: 32px;
-}
-
-.titlePlaceholder {
-  width: 55%;
-  height: 24px;
-  border-radius: 6px;
-  background: #e5ebed;
-}
-
-.descriptionPlaceholder {
-  display: grid;
-  gap: 10px;
-
-  span {
-    height: 12px;
-    border-radius: 4px;
-    background: #edf0ef;
-  }
-
-  span:last-child {
-    width: 75%;
-  }
-}
-
-.tagsPlaceholder {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-
-  span {
-    width: 64px;
-    height: 26px;
-    border-radius: 13px;
-    background: #edf4f7;
-  }
-}
-
-@media (max-width: 650px) {
-  .projectCard {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .imagePlaceholder {
-    min-height: 0;
-    aspect-ratio: 16 / 9;
-    border-right: 0;
-    border-bottom: 1px solid #dce6eb;
-  }
-
-  .cardContent {
-    padding: 24px;
-  }
-}
+@use '../../styles' as s;
+.project_container { display: grid; gap: 28px; }
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.projectCard { overflow: hidden; border: 1px solid s.$color-border; border-radius: s.$radius-card; background: s.$color-surface; transition: border-color .2s, box-shadow .2s; }
+.projectCard:hover { border-color: s.$color-accent; box-shadow: 4px 4px 0 #2860b50c; }
+.preview { position: relative; display: grid; align-content: center; min-height: 210px; padding: 32px; color: s.$color-accent; border-bottom: 1px solid s.$color-border; background-color: #eef3f8; background-image: linear-gradient(#2860b50c 1px, transparent 1px), linear-gradient(90deg, #2860b50c 1px, transparent 1px); background-size: 20px 20px; }
+.preview svg { width: 100%; height: 140px; }
+.imagePreview { min-height: 0; aspect-ratio: 2 / 1; padding: 12px; align-content: normal; }
+.preview img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.figure { position: absolute; top: 16px; left: 20px; font: 10px ui-monospace, monospace; }
+.previewName { text-align: right; font: 11px ui-monospace, monospace; }
+.cardContent { display: grid; justify-items: start; gap: 12px; padding: 26px; }
+.number { color: #61728a; font: 10px ui-monospace, monospace; letter-spacing: .1em; }
+.projectTitle { font-size: 23px; overflow-wrap: anywhere; }
+.skill { font-size: 13px; color: #61728a; }
+.projectLink { display: inline-flex; gap: 24px; padding-block: 6px; color: s.$color-accent; text-decoration: none; font-size: 13px; font-weight: 600; @include s.focus-ring; &:hover { text-decoration: underline; text-underline-offset: 5px; } }
+@include s.mobile { .projects { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .projectCard { transition: none; } }

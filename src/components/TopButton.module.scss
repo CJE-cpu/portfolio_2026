@@ -1,0 +1,70 @@
+@use '../styles' as s;
+
+.top {
+  position: fixed;
+  z-index: 10;
+  right: max(20px, env(safe-area-inset-right));
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 76px;
+  height: 84px;
+  padding: 10px;
+  border: 1px solid s.$color-accent;
+  border-radius: s.$radius-card;
+  color: s.$color-accent;
+  background-color: s.$color-background;
+  background-image:
+    linear-gradient(#2860b50c 1px, transparent 1px),
+    linear-gradient(90deg, #2860b50c 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 3px 3px 0 #2860b51a;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s, background-color .2s;
+
+  @include s.focus-ring;
+
+  &:hover {
+    transform: translateY(-3px);
+    background-color: s.$color-accent-soft;
+    box-shadow: 3px 6px 0 #2860b51a;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 0 #2860b51a;
+  }
+}
+
+.coordinates {
+  width: 40px;
+  height: 36px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.axis, .ticks { stroke-width: 1; opacity: .35; }
+.arrow { stroke-width: 2; }
+.origin { fill: s.$color-background; stroke-width: 1.5; }
+.label { font: 600 11px/1.2 ui-monospace, monospace; letter-spacing: .06em; }
+.coordinate { font-weight: 400; }
+
+@include s.mobile {
+  .top {
+    right: max(12px, env(safe-area-inset-right));
+    width: 60px;
+    height: 68px;
+    padding: 6px;
+  }
+  .coordinates { width: 32px; height: 29px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top { transition: none; }
+  .top:hover, .top:active { transform: none; }
+}

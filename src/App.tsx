@@ -1,10 +1,10 @@
-﻿import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import About from './sections/About/About'
 import Skills from './sections/Skills/Skills'
 import Projects from './sections/Projects/Projects'
 import Contact from './sections/Contact/Contact'
+import TopButton from './components/TopButton'
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
         </section>
       </main>
       <Footer />
+      <TopButton />
     </div>
   )
 }
