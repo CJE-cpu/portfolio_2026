@@ -1,5 +1,4 @@
 @use './variables' as v;
-
 @mixin container {
   width: min(#{v.$content-width}, calc(100% - #{v.$space-5 * 2}));
   margin-inline: auto;

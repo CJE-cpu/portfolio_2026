@@ -1,8 +1,47 @@
 @use '../../styles' as s;
-.skills_card { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid s.$color-border; border-left: 1px solid s.$color-border; margin-top: 28px; }
-.skill { position: relative; padding: 24px 20px; border-right: 1px solid s.$color-border; border-bottom: 1px solid s.$color-border; background: s.$color-surface; }
-.index { color: #61728a; font: 11px ui-monospace, monospace; }
-.icon { display: block; width: 48px; height: 48px; margin-top: 20px; object-fit: contain; }
-.skill h3 { margin-top: 18px; font-size: 17px; }
-.mark { position: absolute; top: 20px; right: 18px; color: s.$color-accent; }
-@include s.mobile { .skills_card { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.skills_card {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid s.$color-border;
+  border-left: 1px solid s.$color-border;
+  margin-top: s.$space-8;
+}
+
+.skill {
+  position: relative;
+  padding: s.$space-6 s.$space-5;
+  border-right: 1px solid s.$color-border;
+  border-bottom: 1px solid s.$color-border;
+  background: s.$color-surface;
+}
+
+.index {
+  color: s.$color-muted;
+  font: s.$font-size-caption s.$font-family-mono;
+}
+
+.icon {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin-top: s.$space-5;
+  object-fit: contain;
+}
+
+.skill h3 {
+  margin-top: s.$space-5;
+  font-size: s.$font-size-text;
+}
+
+.mark {
+  position: absolute;
+  top: 20px;
+  right: 18px;
+  color: s.$color-accent;
+}
+
+@include s.mobile {
+  .skills_card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

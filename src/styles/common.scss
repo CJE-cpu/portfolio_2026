@@ -1,7 +1,7 @@
 @use './index' as s;
-
 :root {
   font-family: s.$font-family;
+  font-size: s.$font-size-text;
   color: s.$color-text;
   background: s.$color-background;
   font-synthesis: none;
@@ -9,34 +9,71 @@
   -webkit-font-smoothing: antialiased;
   line-height: s.$line-height;
 }
+
 body {
-  background-image: linear-gradient(#3262a309 1px, transparent 1px), linear-gradient(90deg, #3262a309 1px, transparent 1px);
+  background-image: linear-gradient(s.$color-grid 1px, transparent 1px), linear-gradient(90deg, s.$color-grid 1px, transparent 1px);
   background-size: 24px 24px;
 }
-a { color: inherit; @include s.focus-ring; }
-::selection { background: #c9ddfb; }
-.app { display: flex; flex-direction: column; min-height: 100svh; }
-.layout { @include s.container; }
-.main { flex: 1; counter-reset: section; }
+
+a {
+  color: inherit;
+  @include s.focus-ring;
+}
+
+::selection {
+  background: s.$color-selection;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.layout {
+  @include s.container;
+}
+
+.main {
+  flex: 1;
+  counter-reset: section;
+}
+
 .section {
   counter-increment: section;
-  padding-block: 72px;
-  scroll-margin-top: 24px;
+  padding-block: calc(s.$space-12 + s.$space-6);
+  scroll-margin-top: calc(var(--header-height, 88px) + #{s.$space-6});
   border-bottom: 1px solid s.$color-border;
 }
+
 .section h2 {
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 24px;
+  gap: s.$space-4;
+  font-size: s.$font-size-heading;
   letter-spacing: -.04em;
 }
+
 .section h2::before {
   content: "0" counter(section) " /";
-  font: 12px ui-monospace, monospace;
+  font: s.$font-size-caption s.$font-family-mono;
   color: s.$color-accent;
   letter-spacing: 0;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+// 움직임을 줄이도록 설정한 사용자는 즉시 이동
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 @include s.mobile {
-  .section { padding-block: 44px; }
+  .section {
+    padding-block: s.$space-12;
+  }
 }

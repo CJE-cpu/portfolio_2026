@@ -1,2 +1,9 @@
 @use '../styles' as s;
-.footer { display: flex; justify-content: space-between; gap: 16px; padding-block: 28px; color: #61728a; font: 12px ui-monospace, monospace; }
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: s.$space-4;
+  padding-block: s.$space-8;
+  color: s.$color-muted;
+  font: s.$font-size-caption s.$font-family-mono;
+}

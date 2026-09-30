@@ -8,12 +8,26 @@ $color-accent: #2860b5;
 $color-accent-soft: #edf4f7;
 $color-placeholder-title: #e5ebed;
 $color-placeholder-text: #edf0ef;
-
+$color-muted: #485a72;
+$color-on-accent: #fff;
+$color-grid: rgba($color-accent, .04);
+$color-shadow: rgba($color-accent, .05);
+$color-shadow-strong: rgba($color-accent, .1);
+$color-selection: #c9ddfb;
 // Typography
 $font-family: 'Pretendard', system-ui, 'Segoe UI', 'Malgun Gothic', sans-serif;
 $font-size-heading: 24px;
 $line-height: 1.6;
-
+$font-size-text: 16px;
+$font-family-mono: ui-monospace, monospace;
+$font-size-micro: 12px;
+$font-size-caption: 14px;
+$font-size-small: 14px;
+$font-size-title: 20px;
+$font-size-hero: clamp(30px, 3.7vw, 46px);
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$line-height-heading: 1.35;
 // Spacing
 $space-2: 8px;
 $space-3: 12px;
@@ -22,7 +36,6 @@ $space-5: 20px;
 $space-6: 24px;
 $space-8: 32px;
 $space-12: 48px;
-
 // Layout
 $content-width: 1160px;
 $mobile-breakpoint: 650px;

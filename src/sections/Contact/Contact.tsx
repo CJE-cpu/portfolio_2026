@@ -3,6 +3,10 @@ import styles from './Contact.module.scss'
 const Contact = () => (
   <div className={styles.contact_container}>
     <h2 id="contact-heading">Contact</h2>
+    <div className={styles.contact_intro}>
+      <h3>함께 일할 기회를 기다립니다.</h3>
+      <p>프론트엔드 개발자 채용 관련 문의는 아래 이메일로 보내주세요.</p>
+    </div>
     <div className={styles.contact_card}>
       <div className={styles.contact_email}>
         <h3>E-MAIL</h3>

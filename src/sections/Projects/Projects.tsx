@@ -1,6 +1,16 @@
 import styles from './Projects.module.scss'
 import projectData from '../../data/projectData'
 
+// | 항목 | 들어갈 내용 |
+// |---|---|
+// | 소개 | 누구를 위해 어떤 기능을 만든 서비스인지 |
+// | 기간·인원·역할 | 개발 기간, 개인/팀 구분, 직접 담당한 범위 |
+// | 주요 기능 | 핵심 기능 3개 정도와 화면 |
+// | 기술 선택 | 사용 기술과 선택한 이유 |
+// | 문제 해결 | 발생한 문제 → 원인 → 해결 방법 → 결과 |
+// | 회고 | 배운 점과 다음에 개선할 부분 |
+// | 링크 | 실행 사이트, GitHub, 상세 README |
+
 const Projects = () => (
   <div className={styles.project_container}>
     <h2 id="projects-heading">Projects</h2>
@@ -24,6 +34,11 @@ const Projects = () => (
             <h3 className={styles.projectTitle}>{project.name}</h3>
             {project.description && <p>{project.description}</p>}
             {project.skill && <p className={styles.skill}>{project.skill}</p>}
+            <span>
+              {project.team === 1
+                ? '개인 프로젝트'
+                : `팀 프로젝트 · ${project.team}명`}
+            </span>
             {project.siteUrl ? (
               <a className={styles.projectLink} href={project.siteUrl} target="_blank" rel="noopener noreferrer" aria-label={`${project.name} 사이트 보기 (새 탭에서 열림)`}>
                 사이트 보기 <span aria-hidden="true">↗</span>

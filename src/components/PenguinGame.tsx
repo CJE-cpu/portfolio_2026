@@ -1,7 +1,8 @@
 import { useEffect, useId, useState } from 'react'
 import styles from './PenguinGame.module.scss'
+import { createRandomTarget, MAX_COORDINATE } from '../utils/randomTarget'
 
-const stages = [{ x: 4, y: 3 }, { x: 4, y: 1 }, { x: 4, y: 4 }]
+const STAGE_COUNT = 3
 const UNIT_SIZE = 52
 const sx = (x: number) => 40 + x * UNIT_SIZE
 const sy = (y: number) => 320 - y * UNIT_SIZE
@@ -13,7 +14,7 @@ const PenguinGame = () => {
   const [height, setHeight] = useState(0)
   const [progress, setProgress] = useState(0)
   const [status, setStatus] = useState<'ready' | 'running' | 'success' | 'miss'>('ready')
-  const target = stages[stage]
+  const [target, setTarget] = useState(() => createRandomTarget())
 
   useEffect(() => {
     if (status !== 'running') return
@@ -33,7 +34,8 @@ const PenguinGame = () => {
 
   const reset = () => { setProgress(0); setStatus('ready') }
   const nextStage = () => {
-    setStage((stage + 1) % stages.length)
+    setStage((stage + 1) % STAGE_COUNT)
+    setTarget(createRandomTarget(target))
     setSlope(0.5)
     setHeight(0)
     reset()
@@ -61,11 +63,17 @@ const PenguinGame = () => {
         <path d="M24 320H340M40 344V15" stroke="#859bb5" />
         <text x="340" y="340">x</text><text x="24" y="17">y</text>
         <g clipPath={`url(#${id})`}>
-          <path d={`M${sx(0)} ${sy(height)}L${sx(4.5)} ${sy(slope * 4.5 + height)}`} stroke="#2860b5" strokeWidth="3" fill="none" />
+          <path d={`M${sx(0)} ${sy(height)}L${sx(MAX_COORDINATE)} ${sy(slope * MAX_COORDINATE + height)}`} stroke="#2860b5" strokeWidth="3" fill="none" />
           <g transform={`translate(${sx(target.x)}, ${sy(target.y)})`} opacity={status === 'success' ? 0.3 : 1}>
             <circle r="20" fill="#f5bd6230" />
-            <path d="M-11 0Q0 -14 12 0Q0 14 -11 0M11 0L19 -8V8Z" fill="#df9234" />
-            <circle cx="-4" cy="-2" r="1.6" fill="#24344b" />
+            <image
+              href="/images/game/fish.png"
+              x="-24"
+              y="-24"
+              width="48"
+              height="48"
+              preserveAspectRatio="xMidYMid meet"
+            />
           </g>
         </g>
         <image

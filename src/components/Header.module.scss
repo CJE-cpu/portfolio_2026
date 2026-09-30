@@ -1,7 +1,41 @@
 @use '../styles' as s;
-.header { border-bottom: 1px solid s.$color-border; background: #faf9f4e8; }
-.inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 32px; min-height: 88px; padding-block: 20px; }
-.logo { font-size: 19px; letter-spacing: -.04em; }
-.logo::before { content: '+'; margin-right: 12px; color: s.$color-accent; font: 26px ui-monospace, monospace; }
-.nav { display: flex; flex-wrap: wrap; gap: 12px 28px; font: 13px ui-monospace, monospace; }
-.header a { text-decoration: none; &:hover { color: s.$color-accent; text-decoration: underline; text-underline-offset: 6px; } }
+.header {
+  border-bottom: 1px solid s.$color-border;
+  background: rgba(s.$color-background, .91);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: s.$space-4 s.$space-8;
+  min-height: 88px;
+  padding-block: s.$space-5;
+}
+
+.logo {
+  font-size: s.$font-size-title;
+  letter-spacing: -.04em;
+}
+
+.logo::before {
+  margin-right: s.$space-3;
+  color: s.$color-accent;
+  font: s.$font-size-heading s.$font-family-mono;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: s.$space-3 s.$space-8;
+  font: s.$font-size-small s.$font-family-mono;
+}
+
+.header a {
+  text-decoration: none;
+}

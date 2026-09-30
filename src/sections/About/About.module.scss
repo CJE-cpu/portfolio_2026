@@ -1,14 +1,91 @@
 @use '../../styles' as s;
-.about_container { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 48px; min-height: 440px; }
-.eyebrow { font: 11px ui-monospace, monospace; letter-spacing: .12em; color: s.$color-accent; margin-bottom: 24px; }
-.profile { margin-top: 24px; }
-.profile h3 { font-size: clamp(30px, 3.7vw, 46px); line-height: 1.35; letter-spacing: -.06em; }
-.profile h3 span { color: s.$color-accent; }
-.info { margin-top: 24px; color: #566174; font-size: 15px; }
-.info p + p { margin-top: 8px; }
-.workLink { display: inline-flex; gap: 32px; margin-top: 30px; padding-bottom: 6px; border-bottom: 1px solid s.$color-accent; text-decoration: none; color: s.$color-accent; font-size: 14px; font-weight: 600; }
-.graph { min-width: 0; padding: 20px; border: 1px solid s.$color-border; background: #faf9f480; background-image: linear-gradient(#3262a30e 1px, transparent 1px), linear-gradient(90deg, #3262a30e 1px, transparent 1px); background-size: 24px 24px; box-shadow: 6px 6px 0 #2860b508; }
-.graphLabel { display: flex; justify-content: space-between; gap: 8px; color: s.$color-accent; font: 10px ui-monospace, monospace; }
-.graph svg { width: 100%; height: auto; }
-.graphNote { text-align: right; font-size: 11px; color: #61728a; }
-@include s.mobile { .about_container { grid-template-columns: 1fr; gap: 36px; } .graph { max-width: 480px; width: 100%; } }
+.about_container {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: s.$space-12;
+  min-height: 440px;
+}
+
+.eyebrow {
+  font: s.$font-size-caption s.$font-family-mono;
+  letter-spacing: .12em;
+  color: s.$color-accent;
+  margin-bottom: s.$space-6;
+}
+
+.profile {
+  margin-top: s.$space-6;
+}
+
+.profile h3 {
+  font-size: s.$font-size-hero;
+  line-height: s.$line-height-heading;
+  letter-spacing: -.06em;
+}
+
+.profile h3 span {
+  color: s.$color-accent;
+}
+
+.info {
+  margin-top: s.$space-6;
+  color: s.$color-muted;
+  font-size: s.$font-size-text;
+}
+
+.info p + p {
+  margin-top: s.$space-2;
+}
+
+.workLink {
+  display: inline-flex;
+  gap: s.$space-8;
+  margin-top: s.$space-8;
+  padding-bottom: s.$space-2;
+  border-bottom: 1px solid s.$color-accent;
+  text-decoration: none;
+  color: s.$color-accent;
+  font-size: s.$font-size-small;
+  font-weight: s.$font-weight-semibold;
+}
+
+.graph {
+  min-width: 0;
+  padding: s.$space-5;
+  border: 1px solid s.$color-border;
+  background: rgba(s.$color-background, .5);
+  background-image: linear-gradient(s.$color-grid 1px, transparent 1px), linear-gradient(90deg, s.$color-grid 1px, transparent 1px);
+  background-size: 24px 24px;
+  box-shadow: 6px 6px 0 s.$color-shadow;
+}
+
+.graphLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: s.$space-2;
+  color: s.$color-accent;
+  font: s.$font-size-micro s.$font-family-mono;
+}
+
+.graph svg {
+  width: 100%;
+  height: auto;
+}
+
+.graphNote {
+  text-align: right;
+  font-size: s.$font-size-caption;
+  color: s.$color-muted;
+}
+
+@include s.mobile {
+  .about_container {
+    grid-template-columns: 1fr;
+    gap: s.$space-8;
+  }
+  .graph {
+    max-width: 480px;
+    width: 100%;
+  }
+}
