@@ -29,6 +29,8 @@
 }
 
 .skill h3 {
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
   margin-top: s.$space-5;
   font-size: s.$font-size-text;
 }

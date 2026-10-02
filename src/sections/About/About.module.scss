@@ -1,14 +1,14 @@
 @use '../../styles' as s;
 .about_container {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
   gap: s.$space-12;
   min-height: 440px;
 }
 
 .eyebrow {
-  font: s.$font-size-caption s.$font-family-mono;
+  font: 600 s.$font-size-caption s.$font-family-mono;
   letter-spacing: .12em;
   color: s.$color-accent;
   margin-bottom: s.$space-6;

@@ -2,6 +2,7 @@
 :root {
   font-family: s.$font-family;
   font-size: s.$font-size-text;
+  font-weight: s.$font-weight-regular;
   color: s.$color-text;
   background: s.$color-background;
   font-synthesis: none;
@@ -47,6 +48,8 @@ a {
 }
 
 .section h2 {
+  font-weight: 700;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: s.$space-4;

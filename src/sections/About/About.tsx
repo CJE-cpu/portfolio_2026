@@ -1,4 +1,3 @@
-import PenguinGame from '../../components/PenguinGame'
 import styles from './About.module.scss'
 
 const About = () => (
@@ -13,9 +12,9 @@ const About = () => (
           <p>React와 TypeScript로 웹을 만들고,<br />수학에서 새로운 아이디어를 찾습니다.</p>
         </div>
       </div>
-      <a className={styles.workLink} href="#projects">프로젝트 살펴보기 <span aria-hidden="true">↗</span></a>
+      <a className={styles.workLink} href="#projects">프로젝트 살펴보기</a>
     </div>
-    <PenguinGame />
+
   </div>
 )
 

@@ -26,7 +26,7 @@
 }
 
 .contact_card h3 {
-  font: s.$font-size-caption s.$font-family-mono;
+  font: 600 s.$font-size-caption s.$font-family-mono;
   color: s.$color-muted;
   margin-bottom: s.$space-4;
 }
@@ -38,6 +38,23 @@
   color: s.$color-accent;
   text-decoration: none;
   overflow-wrap: anywhere;
+}
+
+.contact_link_label {
+  display: flex;
+  align-items: center;
+  gap: s.$space-3;
+  min-width: 0;
+
+  > span {
+    min-width: 0;
+  }
+}
+
+.contact_icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 @include s.mobile {

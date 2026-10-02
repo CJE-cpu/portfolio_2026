@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lexend+Giga:wght@100..900&family=Noto+Sans+KR:wght@100..900&family=Share+Tech+Mono&display=swap');
+
 // Colors
 $color-text: #24344b;
 $color-background: #faf9f4;
@@ -8,25 +10,25 @@ $color-accent: #2860b5;
 $color-accent-soft: #edf4f7;
 $color-placeholder-title: #e5ebed;
 $color-placeholder-text: #edf0ef;
-$color-muted: #485a72;
+$color-muted: #35465e;
 $color-on-accent: #fff;
 $color-grid: rgba($color-accent, .04);
 $color-shadow: rgba($color-accent, .05);
 $color-shadow-strong: rgba($color-accent, .1);
 $color-selection: #c9ddfb;
 // Typography
-$font-family: 'Pretendard', system-ui, 'Segoe UI', 'Malgun Gothic', sans-serif;
-$font-size-heading: 24px;
+$font-family: 'Share Tech Mono', system-ui, 'Segoe UI', 'Malgun Gothic', sans-serif;
+$font-size-heading: 36px;
 $line-height: 1.6;
-$font-size-text: 16px;
-$font-family-mono: ui-monospace, monospace;
-$font-size-micro: 12px;
-$font-size-caption: 14px;
-$font-size-small: 14px;
-$font-size-title: 20px;
-$font-size-hero: clamp(30px, 3.7vw, 46px);
-$font-weight-regular: 400;
-$font-weight-semibold: 600;
+$font-size-text: 20px;
+$font-family-mono: 'Share Tech Mono';
+$font-size-micro: 16px;
+$font-size-caption: 18px;
+$font-size-small: 18px;
+$font-size-title: 24px;
+$font-size-hero: clamp(36px, 4.2vw, 56px);
+$font-weight-regular: 500;
+$font-weight-semibold: 700;
 $line-height-heading: 1.35;
 // Spacing
 $space-2: 8px;

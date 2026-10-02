@@ -1,7 +1,6 @@
 type skill = {
     name : string
     imgUrl : string
-
 }
 
 const skillData : skill[] = [
