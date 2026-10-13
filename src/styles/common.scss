@@ -47,6 +47,11 @@ a {
   border-bottom: 1px solid s.$color-border;
 }
 
+// Section focus is used for navigation, not as an interactive control.
+.section[tabindex='-1']:focus {
+  outline: none;
+}
+
 .section h2 {
   font-weight: 700;
   text-transform: uppercase;

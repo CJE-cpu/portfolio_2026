@@ -1,0 +1,5 @@
+Mode: built-in image_gen edit, transparent background.
+Source: public/images/progress/penguin-slide.png
+Output: public/images/progress/penguin-slide-paper.png
+
+Use case: style-transfer. Asset type: transparent PNG mascot for a developer portfolio scroll progress bar. Edit target: supplied penguin image. Preserve one penguin belly-sliding RIGHT, horizontal body, raised head on right, beak pointing right, feet trailing left, complete silhouette and friendly face. Restyle as refined layered paper-cut illustration matching a tactile desk and ivory stationery website: muted deep navy #294763 and blue #376797 body, warm ivory #fff9e9 face and belly, small muted ochre beak and feet. Subtle fine paper fibers, carefully cut soft edges, slight depth between paper layers, matte diffuse shading, no glossy plastic highlights. Simple bold shapes readable at 100px wide. Center entire penguin in wide 2:1 framing with minimal even margins. Background genuinely transparent alpha. No scene, floor, drop shadow outside silhouette, border, text, watermark, accessories or extra characters.

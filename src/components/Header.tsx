@@ -75,7 +75,7 @@ const Header = () => {
       <div className={styles.progress_container}>
         <div ref={progressBarRef} className={styles.progressbar}></div>
         <div className={styles.progress_thumb}>
-          <img src='/images/progress/penguin-slide.png' alt="Progress Icon" />
+          <img src='/images/progress/penguin-slide-paper-v2.png' alt="" aria-hidden="true" />
         </div>
       </div>
     </header>

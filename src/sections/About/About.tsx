@@ -14,7 +14,9 @@ const About = () => (
       </div>
       <a className={styles.workLink} href="#projects">프로젝트 살펴보기</a>
     </div>
-
+    <div className={styles.canvas}>
+      <canvas id="about-canvas" width="600" height="600" />
+    </div>
   </div>
 )
 

@@ -1,12 +1,11 @@
 @use '../../styles' as s;
 .about_container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: s.$space-12;
   min-height: 440px;
 }
-
 .eyebrow {
   font: 600 s.$font-size-caption s.$font-family-mono;
   letter-spacing: .12em;
@@ -77,6 +76,17 @@
   text-align: right;
   font-size: s.$font-size-caption;
   color: s.$color-muted;
+}
+
+.canvas{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid s.$color-border;
+  background: rgba(s.$color-background, .5);
+  background-image: linear-gradient(s.$color-grid 1px, transparent 1px), linear-gradient(90deg, s.$color-grid 1px, transparent 1px);
+  background-size: 24px 24px;
+  box-shadow: 6px 6px 0 s.$color-shadow;
 }
 
 @include s.mobile {

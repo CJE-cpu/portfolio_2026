@@ -1,5 +1,4 @@
 import styles from './TopButton.module.scss'
-import MagneticBox from './MagneticBox'
 
 const TopButton = () => {
   const handleScrollToTop = () => {
@@ -13,9 +12,12 @@ const TopButton = () => {
 
   return (
     <button type="button" className={styles.top} onClick={handleScrollToTop} aria-label="페이지 맨 위로 이동">
-      <MagneticBox>
-        <span className={styles.label}>TOP</span>
-      </MagneticBox>
+      <span className={styles.icon} aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 4h12M12 20V8m-5 5 5-5 5 5" />
+        </svg>
+      </span>
+      <span className={styles.label}>TOP</span>
     </button>
   )
 }
