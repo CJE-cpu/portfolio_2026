@@ -1,0 +1,5 @@
+Mode: built-in image_gen background extraction, transparent background.
+Source: user attachment image_2a2fb47a.jpg
+Output: public/images/progress/penguin-slide-cutout.png
+
+Use case: background-extraction. Edit target: attached paper-cut sliding penguin image. Remove ONLY the off-white textured background and its external cast shadows, replacing with genuine transparent alpha. Preserve the exact penguin design, silhouette, right-facing belly-slide pose, both flippers, face, eye, navy and ivory paper fibers, ochre beak and feet, and small decorative paper fragments trailing on the left. Preserve the ivory face and belly as fully opaque foreground, do not mistake them for background. Keep composition and wide 2:1 aspect ratio. Clean antialiased cutout edges with no white halo. No redesign, no new objects, no text, no checkerboard rendered into image.

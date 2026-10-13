@@ -39,11 +39,62 @@
   font: 700 s.$font-size-small s.$font-family-mono;
 
   a {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     padding: s.$space-2 s.$space-4; /* 💡 마우스 반응 면적을 넓히는 패딩 추가 */
     text-decoration: none;
     font-weight: 700;
+    &:focus-visible { outline: 2px solid s.$color-accent; outline-offset: 3px; border-radius: 4px; }
   }
+}
+
+.menuLabel {
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  transition: color .2s;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform .24s ease-out;
+  }
+  &::before {
+    z-index: -1;
+    inset: 42% -5px 2%;
+    background: #efd77899;
+    clip-path: polygon(1% 12%, 99% 0, 100% 84%, 2% 100%);
+  }
+  &::after {
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 2px;
+    border-radius: 50%;
+    background: s.$color-accent;
+  }
+}
+
+.nav a:focus-visible .menuLabel, .nav a:active .menuLabel {
+  color: s.$color-accent;
+  &::before { transform: scaleX(1) rotate(-1deg); }
+  &::after { transform: scaleX(1); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav a:hover .menuLabel {
+    color: s.$color-accent;
+    &::before { transform: scaleX(1) rotate(-1deg); }
+    &::after { transform: scaleX(1); transition-delay: .07s; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menuLabel, .menuLabel::before, .menuLabel::after { transition: none; }
 }
 
 .header a {

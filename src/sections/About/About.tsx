@@ -1,6 +1,40 @@
 import styles from './About.module.scss'
+import { useEffect, useRef } from 'react'
 
-const About = () => (
+const About = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const context = canvas?.getContext('2d')
+    if (!canvas || !context) return
+    const notebook = new Image()
+    notebook.onload = () => {
+      const resolution = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = canvas.height = 600 * resolution
+      context.setTransform(resolution, 0, 0, resolution, 0, 0)
+      context.clearRect(0, 0, 600, 600)
+      const scale = 560 / Math.max(notebook.naturalWidth, notebook.naturalHeight)
+      const width = notebook.naturalWidth * scale, height = notebook.naturalHeight * scale
+      context.drawImage(notebook, (600 - width) / 2, (600 - height) / 2, width, height)
+    }
+    notebook.src = '/images/about/drawing-notebook.png'
+    canvas.onclick = (e) => {
+      const X = e.clientX - context.canvas.offsetLeft
+      const Y = e.clientY - context.canvas.offsetTop
+      context.fillStyle = "black";
+      context.fillRect(X+10, Y+10, 10, 10);
+    }
+    canvas.onmousemove = (e) => {
+      if (e.buttons !== 1) return
+      const X = e.clientX - context.canvas.offsetLeft
+      const Y = e.clientY - context.canvas.offsetTop
+      context.fillStyle = "black";
+      context.fillRect(X+10, Y+10, 10, 10);
+    } 
+    return () => { notebook.onload = null }
+  }, [])
+
+  return (
   <div className={styles.about_container}>
     <div className={styles.intro}>
       <p className={styles.eyebrow}>CJE / FRONTEND PORTFOLIO</p>
@@ -15,9 +49,12 @@ const About = () => (
       <a className={styles.workLink} href="#projects">프로젝트 살펴보기</a>
     </div>
     <div className={styles.canvas}>
-      <canvas id="about-canvas" width="600" height="600" />
+      <canvas ref={canvasRef} id="about-canvas" width="600" height="600" role="img" aria-label="남색 표지와 왼쪽 링 제본이 있는 빈 아이보리색 드로잉 노트">
+        남색 표지와 왼쪽 링 제본이 있는 빈 아이보리색 드로잉 노트
+      </canvas>
     </div>
   </div>
 )
+}
 
 export default About

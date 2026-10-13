@@ -79,14 +79,14 @@
 }
 
 .canvas{
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid s.$color-border;
   background: rgba(s.$color-background, .5);
   background-image: linear-gradient(s.$color-grid 1px, transparent 1px), linear-gradient(90deg, s.$color-grid 1px, transparent 1px);
   background-size: 24px 24px;
-  box-shadow: 6px 6px 0 s.$color-shadow;
+  canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; }
 }
 
 @include s.mobile {

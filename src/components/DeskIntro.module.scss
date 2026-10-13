@@ -6,11 +6,31 @@
   height: 100svh;
   color: s.$color-text;
   background: #e8e3d8;
-  button { font: inherit; color: inherit; cursor: pointer; }
-  button:focus-visible { outline: 3px solid s.$color-accent; outline-offset: 4px; }
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  button:focus-visible {
+    outline: 3px solid s.$color-accent;
+    outline-offset: 4px;
+  }
 }
-.stage { position: absolute; inset: 0; z-index: -1; }
-.canvas { position: absolute; inset: 0; canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; } }
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.canvas {
+  position: absolute;
+  inset: 0;
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y;
+  }
+}
 .header {
   color: s.$color-placeholder-text;
   position: absolute; top: 24px; left: clamp(20px, 4vw, 64px); right: clamp(20px, 4vw, 64px);
@@ -43,13 +63,28 @@
   .enterButton:hover .enterArrow { transform: translateX(2px); }
 }
 .heading {
-  position: absolute; top: 92px; left: 20px; right: 20px; text-align: center; pointer-events: none;
+  position: absolute;
+  top: 92px;
+  left: 20px;
+  right: 20px;
+  text-align: center; 
+  pointer-events: none;
   text-shadow: 0 1px 12px #fff9ee;
   p:first-child { font: 700 14px s.$font-family-mono; letter-spacing: .12em; color: s.$color-accent; }
   h1 { font-size: clamp(32px, 4vw, 54px); letter-spacing: -.05em; margin: 6px 0; span { color: s.$color-accent; } }
   p:last-child { font-size: 17px; }
 }
-.fallback { position: absolute; top: 48%; left: 20px; right: 20px; text-align: center; font-size: 18px; padding: 20px; background: #faf9f4; border-radius: 12px; pointer-events: none; }
+.fallback {
+  position: absolute;
+  top: 48%;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  border-radius: 12px;
+  pointer-events: none;
+}
 .hint { 
   position: absolute;
   color: s.$color-placeholder-text;

@@ -1,7 +1,6 @@
 ﻿import styles from './Header.module.scss'
 
 import { useLayoutEffect, useRef } from 'react'
-import MagneticBox from './MagneticBox'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger) 
@@ -66,16 +65,16 @@ const Header = () => {
       <div className={`layout ${styles.inner}`}>
         <h1 className={styles.logo}><a href="#top">CJE's Portfolio</a></h1>
         <nav className={styles.nav} aria-label="주 메뉴">
-          <a href="#about"><MagneticBox>about</MagneticBox></a>
-          <a href="#skills"><MagneticBox>skills</MagneticBox></a>
-          <a href="#projects"><MagneticBox>projects</MagneticBox></a>
-          <a href="#contact"><MagneticBox>contact</MagneticBox></a>
+          <a href="#about"><span className={styles.menuLabel}>about</span></a>
+          <a href="#skills"><span className={styles.menuLabel}>skills</span></a>
+          <a href="#projects"><span className={styles.menuLabel}>projects</span></a>
+          <a href="#contact"><span className={styles.menuLabel}>contact</span></a>
         </nav>
       </div>
       <div className={styles.progress_container}>
         <div ref={progressBarRef} className={styles.progressbar}></div>
         <div className={styles.progress_thumb}>
-          <img src='/images/progress/penguin-slide-paper-v2.png' alt="" aria-hidden="true" />
+          <img src='/images/progress/penguin-slide-cutout.png' alt="" aria-hidden="true" />
         </div>
       </div>
     </header>
