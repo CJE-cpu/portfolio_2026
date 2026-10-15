@@ -1,7 +1,7 @@
 @use '../styles' as s;
 .header {
   border-bottom: 1px solid s.$color-border;
-  background: rgba(s.$color-background, .91);
+  background: rgba(s.$color-background, 0.91);
   width: 100%;
   position: sticky;
   top: 0;
@@ -19,9 +19,10 @@
 }
 
 .logo {
+  font-family: s.$font-family-mono;
   text-transform: uppercase;
   font-size: s.$font-size-title;
-  letter-spacing: -.04em;
+  letter-spacing: -0.04em;
 }
 
 .logo::before {
@@ -45,7 +46,11 @@
     padding: s.$space-2 s.$space-4; /* 💡 마우스 반응 면적을 넓히는 패딩 추가 */
     text-decoration: none;
     font-weight: 700;
-    &:focus-visible { outline: 2px solid s.$color-accent; outline-offset: 3px; border-radius: 4px; }
+    &:focus-visible {
+      outline: 2px solid s.$color-accent;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
   }
 }
 
@@ -53,15 +58,16 @@
   position: relative;
   isolation: isolate;
   display: inline-block;
-  transition: color .2s;
+  transition: color 0.2s;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     pointer-events: none;
     transform-origin: left center;
     transform: scaleX(0);
-    transition: transform .24s ease-out;
+    transition: transform 0.24s ease-out;
   }
   &::before {
     z-index: -1;
@@ -79,22 +85,36 @@
   }
 }
 
-.nav a:focus-visible .menuLabel, .nav a:active .menuLabel {
+.nav a:focus-visible .menuLabel,
+.nav a:active .menuLabel {
   color: s.$color-accent;
-  &::before { transform: scaleX(1) rotate(-1deg); }
-  &::after { transform: scaleX(1); }
+  &::before {
+    transform: scaleX(1) rotate(-1deg);
+  }
+  &::after {
+    transform: scaleX(1);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
   .nav a:hover .menuLabel {
     color: s.$color-accent;
-    &::before { transform: scaleX(1) rotate(-1deg); }
-    &::after { transform: scaleX(1); transition-delay: .07s; }
+    &::before {
+      transform: scaleX(1) rotate(-1deg);
+    }
+    &::after {
+      transform: scaleX(1);
+      transition-delay: 0.07s;
+    }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menuLabel, .menuLabel::before, .menuLabel::after { transition: none; }
+  .menuLabel,
+  .menuLabel::before,
+  .menuLabel::after {
+    transition: none;
+  }
 }
 
 .header a {
@@ -109,7 +129,10 @@
 
 .progress_container {
   position: fixed;
-  top: var(--header-height, 88px); /* 자바스크립트가 계산한 동적 높이를 적용 (기본값 88px) */
+  top: var(
+    --header-height,
+    88px
+  ); /* 자바스크립트가 계산한 동적 높이를 적용 (기본값 88px) */
   left: 0;
   width: 100%;
   height: 4px;
@@ -128,12 +151,12 @@
   transform: scaleX(0);
   transform-origin: left;
 }
-.progress_icon{
-  width: 100px;  /* 원하시는 이미지 크기 */
+.progress_icon {
+  width: 100px; /* 원하시는 이미지 크기 */
   height: 100px; /* 원하시는 이미지 크기 */
   position: absolute;
   right: -50px; /* 이미지의 절반만큼 오른쪽으로 빼서 바 끝에 중앙이 오도록 정렬 */
-  
+
   img {
     width: 100%;
     height: 100%;
@@ -152,18 +175,18 @@
 /* 💡 새로 추가한 독립 이미지 컨테이너 스타일 */
 .progress_thumb {
   position: absolute;
-  top: 50%;          /* 부모 바의 세로 중앙 정렬 */
-  left: 0;           /* 시작점은 왼쪽 끝 */
-  width: 100px;      /* 원하는 이미지 크기 */
-  height: 100px;     /* 원하는 이미지 크기 */
-  
+  top: 50%; /* 부모 바의 세로 중앙 정렬 */
+  left: 0; /* 시작점은 왼쪽 끝 */
+  width: 100px; /* 원하는 이미지 크기 */
+  height: 100px; /* 원하는 이미지 크기 */
+
   /* 
     [중요] 이미지가 중심축을 기준으로 바 맨 끝에 걸치게 만들고,
     동시에 세로 정렬(top: 50%)을 맞추기 위해 Y축도 -50%를 줍니다.
   */
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   will-change: transform; /* 애니메이션 성능 최적화 */
-  pointer-events: none;   /* 마우스 클릭 무시 (메뉴 링크 클릭 방해 방지) */
+  pointer-events: none; /* 마우스 클릭 무시 (메뉴 링크 클릭 방해 방지) */
 
   img {
     width: 100%;
@@ -180,14 +203,17 @@
   align-items: center;
   justify-content: center;
   /* 사각형 테두리와 내부 글자 사이의 여백 공간 확보 */
-  padding: s.$space-3 s.$space-6; 
+  padding: s.$space-3 s.$space-6;
   cursor: pointer;
 
   // 💡 마우스를 올렸을 때만 테두리가 더 선명하고 돋보이게 처리
   &:hover {
     .magnetic_border_box {
-      border-color: s.$color-accent; 
-      background-color: rgba(s.$color-accent-soft, 0.15); // 은은한 내부 배경색 추가 선택
+      border-color: s.$color-accent;
+      background-color: rgba(
+        s.$color-accent-soft,
+        0.15
+      ); // 은은한 내부 배경색 추가 선택
       opacity: 1;
     }
     .magnetic_box_text {
@@ -213,7 +239,7 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0.5; /* 평소 불투명도 */
-  
+
   /* 
     [주의] Framer Motion이 실시간으로 transform(위치)을 계산하므로, 
     CSS transition에 transform을 넣으면 연산 충돌로 모션이 떨리거나 찌그러집니다.
@@ -227,40 +253,52 @@
     - s.$color-border 색상으로 12px 만큼 선을 긋고, 나머지는 transparent(투명) 처리합니다.
     - 2px은 선의 두께입니다.
   */
-  background: 
+  background:
     linear-gradient(to right, s.$color-border 12px, transparent 12px) top left,
     linear-gradient(to bottom, s.$color-border 12px, transparent 12px) top left,
     linear-gradient(to left, s.$color-border 12px, transparent 12px) top right,
     linear-gradient(to bottom, s.$color-border 12px, transparent 12px) top right,
-    linear-gradient(to right, s.$color-border 12px, transparent 12px) bottom left,
+    linear-gradient(to right, s.$color-border 12px, transparent 12px) bottom
+      left,
     linear-gradient(to top, s.$color-border 12px, transparent 12px) bottom left,
-    linear-gradient(to left, s.$color-border 12px, transparent 12px) bottom right,
+    linear-gradient(to left, s.$color-border 12px, transparent 12px) bottom
+      right,
     linear-gradient(to top, s.$color-border 12px, transparent 12px) bottom right;
-  
+
   background-repeat: no-repeat;
   /* 가로선 조각들은 두께 2px / 세로선 조각들은 두께 2px로 각 구석에 완벽 고정 */
-  background-size: 100% 2px, 2px 100%; 
+  background-size:
+    100% 2px,
+    2px 100%;
 }
 
 /* 💡 마우스를 올렸을 때(Hover) 모서리 디자인 변화 */
 .magnetic_box_wrapper:hover {
   .magnetic_border_box {
     opacity: 1; /* 선명해짐 */
-    
+
     /* 호버 시 테두리 색상을 포인트 컬러(s.$color-accent)로 교체합니다 */
-    background: 
+    background:
       linear-gradient(to right, s.$color-accent 12px, transparent 12px) top left,
-      linear-gradient(to bottom, s.$color-accent 12px, transparent 12px) top left,
+      linear-gradient(to bottom, s.$color-accent 12px, transparent 12px) top
+        left,
       linear-gradient(to left, s.$color-accent 12px, transparent 12px) top right,
-      linear-gradient(to bottom, s.$color-accent 12px, transparent 12px) top right,
-      linear-gradient(to right, s.$color-accent 12px, transparent 12px) bottom left,
-      linear-gradient(to top, s.$color-accent 12px, transparent 12px) bottom left,
-      linear-gradient(to left, s.$color-accent 12px, transparent 12px) bottom right,
-      linear-gradient(to top, s.$color-accent 12px, transparent 12px) bottom right;
+      linear-gradient(to bottom, s.$color-accent 12px, transparent 12px) top
+        right,
+      linear-gradient(to right, s.$color-accent 12px, transparent 12px) bottom
+        left,
+      linear-gradient(to top, s.$color-accent 12px, transparent 12px) bottom
+        left,
+      linear-gradient(to left, s.$color-accent 12px, transparent 12px) bottom
+        right,
+      linear-gradient(to top, s.$color-accent 12px, transparent 12px) bottom
+        right;
     background-repeat: no-repeat;
-    background-size: 100% 2px, 2px 100%;
+    background-size:
+      100% 2px,
+      2px 100%;
   }
-  
+
   .magnetic_box_text {
     color: s.$color-accent; /* 글자 색상도 포인트 컬러로 매끄럽게 변경 */
   }

@@ -20,9 +20,8 @@
 }
 
 .contact_card > div {
-  padding: s.$space-8;
-  border: 1px solid s.$color-border;
-  background: s.$color-surface;
+  @include s.paper-surface;
+  padding: clamp(20px, 3vw, 32px);
 }
 
 .contact_card h3 {
@@ -38,6 +37,13 @@
   color: s.$color-accent;
   text-decoration: none;
   overflow-wrap: anywhere;
+  min-height: 44px;
+  align-items: center;
+  text-underline-offset: 5px;
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
 }
 
 .contact_link_label {

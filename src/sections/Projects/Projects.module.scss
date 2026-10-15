@@ -1,54 +1,71 @@
 @use '../../styles' as s;
 
-.project_container { display: grid; gap: s.$space-8; }
-.projects { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(24px, 5vw, 72px); align-items: start; }
-.details { min-width: 0; }
-.projectPanel {
-  min-height: max(600px, calc(100svh - var(--header-height, 88px) - 24px));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-block: 48px;
+.container { display: grid; gap: 20px; min-width: 0; }
+.heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 12px;
+  > p { color: s.$color-muted; font-size: 16px; }
 }
-.cardContent { display: grid; justify-items: start; gap: 20px; }
-.number { color: s.$color-accent; font: 700 16px s.$font-family-mono; letter-spacing: .12em; }
-.projectTitle { text-transform: uppercase; font-size: clamp(32px, 3.4vw, 48px); line-height: 1.2; letter-spacing: -.04em; overflow-wrap: anywhere; }
-.description { color: s.$color-text; font-size: 20px; line-height: 1.85; white-space: pre-line; overflow-wrap: anywhere; }
-.skills { text-transform: uppercase; display: flex; flex-wrap: wrap; gap: 8px; span { padding: 5px 10px; border: 1px solid s.$color-border; font-size: 18px; background: rgba(s.$color-surface, .7); } }
-.team { color: s.$color-muted; font-size: 18px; }
-.projectLink { display: inline-flex; align-items: center; gap: 32px; padding: 12px 18px; border: 1px solid s.$color-border; color: s.$color-accent; background: s.$color-surface; font-size: 18px; transition: background .2s; @include s.focus-ring; &:hover { background: s.$color-accent-soft; } }
-.previewColumn {
-  position: sticky;
-  top: calc(var(--header-height, 88px) + 24px);
-  height: calc(100svh - var(--header-height, 88px) - 48px);
-  min-height: 280px;
-  display: grid;
-  align-items: center;
-  min-width: 0;
+.eyebrow { font: 700 13px/1.5 s.$font-family-mono, monospace; letter-spacing: .12em; color: s.$color-muted; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 8px;
+  button { padding: 11px 16px; border: 1px solid s.$color-border; border-radius: 9px 9px 2px 2px; background: #ede9de; color: s.$color-text; cursor: pointer; font: inherit; font-size: 14px; font-weight: 700; transition: background .2s, transform .2s;
+    span { margin-right: 8px; opacity: .65; font-size: 12px; }
+    &:hover { transform: translateY(-3px); background: #e3eaf0; }
+    &[aria-current='true'] { background: s.$color-text; color: white; border-color: s.$color-text; }
+  }
 }
-.previewStage { position: relative; width: 100%; height: min(510px, 100%); box-shadow: 5px 12px 26px rgba(65, 53, 35, .12); border-radius: 4px; }
-.paperSheet {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: clamp(16px, 2.5vw, 30px);
-  border: 1px solid #dedbd2;
-  background: s.$color-surface url('/images/textures/ivory-paper.png') repeat;
-  background-size: 520px 520px;
-  overflow: hidden;
-  img { flex: 1; min-height: 0; width: 100%; object-fit: contain; object-position: center; }
+.book { position: relative; perspective: 1800px; border: 1px solid #c8c0ae; border-radius: 6px 14px 14px 6px; background: #eee7d6; box-shadow: 0 5px 0 -1px #f9f5e9, 0 6px 0 #c8c0ae, 0 10px 0 -1px #eee9dd, 0 11px 0 #c8c0ae, 0 22px 35px #43352318; }
+.spread { display: grid; grid-template-columns: 1fr 1fr; transform-origin: center; position: relative; border-radius: inherit; background: #fff9e9 url('/images/textures/ivory-paper.webp') center / 520px;
+  &::after { content: ''; position: absolute; top: 0; bottom: 0; left: calc(50% - 15px); width: 30px; background: linear-gradient(90deg, transparent, #66523816 45%, #66523830 50%, #ffffff80 55%, transparent); pointer-events: none; }
 }
-.sheetLabel, .sheetCaption { text-transform: uppercase; flex-wrap: wrap; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: s.$color-muted; font: 700 16px s.$font-family-mono; letter-spacing: .08em; }
-.sheetCaption { padding-top: 16px; border-top: 1px solid s.$color-border; span:first-child { color: s.$color-text; font-size: 18px; overflow-wrap: anywhere; } }
-.inlinePreview { display: none; }
+.leftPage, .rightPage { padding: clamp(24px, 3.5vw, 44px); min-width: 0; display: flex; flex-direction: column; gap: 20px; min-height: 580px; }
+.leftPage h3 { font-size: clamp(28px, 3vw, 42px); line-height: 1.2; overflow-wrap: anywhere; text-transform: uppercase; }
+.team { font-size: 14px; color: s.$color-muted; }
+.description { font-size: 17px; line-height: 1.9; white-space: pre-line; word-break: keep-all; overflow-wrap: anywhere; }
+.skills { display: flex; flex-wrap: wrap; gap: 8px;
+  span { padding: 5px 9px; font-size: 12px; font-weight: 700; text-transform: uppercase; border: 1px dashed #aab4bb; border-radius: 4px; }
+}
+.pageMark { margin-top: auto; padding-top: 22px; border-top: 1px solid #b1a58f50; color: s.$color-muted; font-size: 12px; letter-spacing: .04em; }
+.preview { position: relative; margin: 8px 0 0; padding: 12px; background: #fffef9; box-shadow: 0 4px 14px #3f35251a; border: 1px solid #ded8c9; transform: rotate(1deg);
+  &::before { content: ''; position: absolute; width: 76px; height: 25px; top: -14px; left: calc(50% - 38px); transform: rotate(-5deg); background: #cbd8de99; border-left: 1px dashed #9caeb955; border-right: 1px dashed #9caeb955; }
+  img { width: 100%; height: 280px; object-fit: contain; background: #f0eee6; display: block; }
+  figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-top: 14px; font-size: 14px; font-weight: 700;
+    span { font-size: 10px; letter-spacing: .12em; color: s.$color-muted; }
+  }
+}
+.link { @include s.paper-button; align-self: flex-start; display: inline-flex; gap: 20px; font-size: 15px; }
+.controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 15px;
+  button { @include s.paper-button; font-size: 14px; cursor: pointer;
+    &:disabled { opacity: .4; cursor: default; transform: none; }
+  }
+}
+.counter { font: 700 16px s.$font-family-mono, monospace; white-space: nowrap; }
+.hint { text-align: center; color: s.$color-muted; font-size: 13px; line-height: 1.7; }
+.book:focus-visible, .tabs button:focus-visible, .controls button:focus-visible, .link:focus-visible { outline: 3px solid s.$color-accent; outline-offset: 5px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 768px) {
+  .heading { align-items: start; flex-direction: column; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; padding: 5px 2px 8px; button { flex-shrink: 0; } }
+  .spread { grid-template-columns: 1fr; &::after { display: none; } }
+  .leftPage, .rightPage { min-height: auto; gap: 16px; padding: 24px; }
+  .rightPage { padding-top: 12px; }
+  .leftPage .pageMark { display: none; }
+  .preview img { height: 230px; }
+  .description { font-size: 16px; }
+  .controls { gap: 8px; button { padding: 10px; font-size: 12px; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tabs button { transition: none; &:hover { transform: none; } }
+}
 
-// Keep screenshots with their projects on mobile and when motion is reduced.
-@media (max-width: 768px), (prefers-reduced-motion: reduce) {
-  .projects { display: block; }
-  .previewColumn { display: none; }
-  .projectPanel { min-height: 0; gap: 28px; padding-block: 36px; border-bottom: 1px solid s.$color-border; &:first-child { padding-top: 0; } &:last-child { border-bottom: 0; padding-bottom: 0; } }
-  .inlinePreview { display: block; padding: 16px; border: 1px solid #dedbd2; background: s.$color-surface url('/images/textures/ivory-paper.png') repeat; background-size: 520px; box-shadow: 3px 6px 12px rgba(65, 53, 35, .08); img { width: 100%; height: auto; } }
-  .projectLink { font-weight: 700;text-align: center; justify-content: center; line-height: 1.2; span { display: none; } }
+// PageFlip owns page position, clipping, and fold shadows.
+.book { perspective: none; width: 100%; min-width: 0; }
+.flipbook { margin-inline: auto; }
+.sheet { background: #fff9e9 url('/images/textures/ivory-paper.webp') center / 520px; border: 1px solid #d4cbb8; overflow: hidden; }
+.leftPage, .rightPage { height: 100%; min-height: 0; box-sizing: border-box; overflow-y: auto; padding: clamp(20px, 3vw, 38px); }
+.leftPage { box-shadow: inset -12px 0 18px -18px #52422d; }
+.rightPage { box-shadow: inset 12px 0 18px -18px #52422d; }
+.sideLabel { display: block; text-align: center; font: 12px/1.8 sans-serif; }
+.tabs button:disabled { cursor: wait; }
+@media (max-width: 768px) {
+  .leftPage, .rightPage { padding: 22px; }
+  .leftPage .pageMark { display: block; }
 }

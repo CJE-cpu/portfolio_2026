@@ -2,17 +2,14 @@
 .skills_card {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  border-top: 1px solid s.$color-border;
-  border-left: 1px solid s.$color-border;
+  gap: 16px;
   margin-top: s.$space-8;
 }
 
 .skill {
+  @include s.paper-surface;
   position: relative;
   padding: s.$space-6 s.$space-5;
-  border-right: 1px solid s.$color-border;
-  border-bottom: 1px solid s.$color-border;
-  background: s.$color-surface;
 }
 
 .index {
@@ -42,7 +39,7 @@
   color: s.$color-accent;
 }
 
-@include s.mobile {
+@media (max-width: 900px) {
   .skills_card {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

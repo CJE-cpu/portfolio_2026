@@ -3,7 +3,8 @@
   display: flex;
   justify-content: space-between;
   gap: s.$space-4;
+  flex-wrap: wrap;
   padding-block: s.$space-8;
   color: s.$color-muted;
-  font: s.$font-size-caption s.$font-family-mono;
+  font: 14px s.$font-family-mono;
 }

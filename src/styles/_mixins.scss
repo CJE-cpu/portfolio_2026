@@ -16,3 +16,47 @@
     outline-offset: 4px;
   }
 }
+
+@mixin paper-surface {
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-card;
+  background: v.$color-surface url('/images/textures/ivory-paper.webp') center /
+    520px;
+  box-shadow: v.$paper-shadow;
+}
+
+@mixin paper-button {
+  @include paper-surface;
+  @include focus-ring;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-bottom: 3px solid #b8ae9c;
+  color: v.$color-text;
+  font-family: v.$font-family;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:disabled) {
+      transform: translateY(-3px);
+    }
+  }
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    transform: none !important;
+  }
+}

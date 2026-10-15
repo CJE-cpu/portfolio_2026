@@ -16,15 +16,25 @@
   border: 1px solid #c9c3b5;
   border-bottom: 3px solid #b8ae9c;
   border-radius: 5px 16px 5px 5px;
-  background: #fff9e9 url('/images/textures/ivory-paper.png') center / 520px;
+  background: #fff9e9 url('/images/textures/ivory-paper.webp') center / 520px;
   color: #294763;
   font: inherit;
   cursor: pointer;
-  box-shadow: 0 4px 0 #353f4914, 0 8px 20px #192a3614;
-  transition: transform .2s, box-shadow .2s;
+  box-shadow:
+    0 4px 0 #353f4914,
+    0 8px 20px #192a3614;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 
-  &:focus-visible { outline: 3px solid #376797; outline-offset: 5px; }
-  &:active { transform: translateY(2px); box-shadow: 0 1px 3px #192a3626; }
+  &:focus-visible {
+    outline: 3px solid #376797;
+    outline-offset: 5px;
+  }
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 3px #192a3626;
+  }
 }
 
 .deskIcon {
@@ -37,29 +47,51 @@
   background: #dfeaf7;
   color: #376797;
   transform: rotate(-6deg);
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 
 .deskLabel {
   display: grid;
   gap: 4px;
   text-align: left;
-  small { font: 700 10px s.$font-family-mono; letter-spacing: .1em; color: #637079; }
-  > span { font-size: 16px; font-weight: 700; }
+  small {
+    font: 700 10px s.$font-family-mono;
+    letter-spacing: 0.1em;
+    color: #637079;
+  }
+  > span {
+    font-size: 16px;
+    font-weight: 700;
+  }
 }
-.returnArrow { flex-shrink: 0; }
+.returnArrow {
+  flex-shrink: 0;
+}
 
 @media (hover: hover) and (pointer: fine) {
   .deskButton:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 0 #353f4914, 0 12px 24px #192a3620;
-    .deskIcon { transform: rotate(0); }
+    box-shadow:
+      0 5px 0 #353f4914,
+      0 12px 24px #192a3620;
+    .deskIcon {
+      transform: rotate(0);
+    }
   }
 }
 @media (max-width: 420px) {
-  .deskButton { gap: 10px; padding: 12px; }
-  .deskLabel > span { font-size: 14px; }
+  .deskButton {
+    gap: 10px;
+    padding: 12px;
+  }
+  .deskLabel > span {
+    font-size: 14px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .deskButton, .deskIcon { transition: none; transform: none !important; }
+  .deskButton,
+  .deskIcon {
+    transition: none;
+    transform: none !important;
+  }
 }

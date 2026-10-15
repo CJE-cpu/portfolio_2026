@@ -12,7 +12,9 @@
 }
 
 body {
-  background-image: linear-gradient(s.$color-grid 1px, transparent 1px), linear-gradient(90deg, s.$color-grid 1px, transparent 1px);
+  background-image:
+    linear-gradient(s.$color-grid 1px, transparent 1px),
+    linear-gradient(90deg, s.$color-grid 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -53,20 +55,25 @@ a {
 }
 
 .section h2 {
+  font-family: s.$font-family-mono;
   font-weight: 700;
   text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: s.$space-4;
   font-size: s.$font-size-heading;
-  letter-spacing: -.04em;
+  letter-spacing: -0.04em;
 }
 
 .section h2::before {
-  content: "0" counter(section) " /";
+  content: '0' counter(section) ' /';
   font: s.$font-size-caption s.$font-family-mono;
   color: s.$color-accent;
   letter-spacing: 0;
+  padding: 6px 10px;
+  border: 1px solid s.$color-border;
+  border-radius: s.$radius-small;
+  background: s.$color-surface;
 }
 
 html {
