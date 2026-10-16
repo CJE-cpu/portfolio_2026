@@ -1,4 +1,43 @@
 @use '../../styles' as s;
+.email_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    user-select: text;
+  }
+}
+.copy_button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid s.$color-border;
+  border-radius: 8px;
+  background: s.$color-surface;
+  cursor: pointer;
+  &:hover {
+    background: s.$color-accent-soft;
+  }
+  &:focus-visible {
+    outline: 2px solid s.$color-accent;
+    outline-offset: 3px;
+  }
+}
+.copy_icon {
+  width: 24px;
+  height: 24px;
+}
+.copy_status {
+  font-size: 14px;
+  color: s.$color-muted;
+  margin-top: 8px;
+  min-height: 1.7em;
+}
 .contact_intro {
   margin-top: s.$space-8;
 
@@ -66,5 +105,104 @@
 @include s.mobile {
   .contact_card {
     grid-template-columns: 1fr;
+  }
+}
+
+.contact_form {
+  @include s.paper-surface;
+  margin-top: s.$space-8;
+  padding: clamp(20px, 4vw, 40px);
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+  legend {
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  label {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  input,
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid s.$color-border;
+    border-radius: 8px;
+    color: s.$color-text;
+    background: rgba(255, 255, 255, 0.65);
+    font: inherit;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    &:focus-visible {
+      outline: 2px solid s.$color-accent;
+      outline-offset: 3px;
+    }
+    &::placeholder {
+      color: s.$color-muted;
+    }
+  }
+  textarea {
+    resize: vertical;
+    min-height: 180px;
+  }
+  button {
+    padding: 14px 24px;
+    border: 1px solid s.$color-accent;
+    border-radius: s.$radius-card;
+    background: s.$color-accent;
+    color: white;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 0 s.$color-border;
+    &:hover:not(:disabled) {
+      background: s.$color-text;
+    }
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+.form_caption {
+  font-family: s.$font-family-mono;
+  color: s.$color-muted;
+  margin-bottom: 16px;
+}
+.form_row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.form_note {
+  font-size: 14px;
+  color: s.$color-muted;
+  margin: 16px 0;
+  line-height: 1.7;
+}
+.form_status {
+  min-height: 1.7em;
+  font-size: 16px;
+  margin-top: 16px;
+  overflow-wrap: anywhere;
+}
+@include s.mobile {
+  .form_row {
+    grid-template-columns: 1fr;
+  }
+  .contact_form button {
+    width: 100%;
   }
 }
