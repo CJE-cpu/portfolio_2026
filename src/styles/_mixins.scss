@@ -20,8 +20,7 @@
 @mixin paper-surface {
   border: 1px solid v.$color-border;
   border-radius: v.$radius-card;
-  background: v.$color-surface url('/images/textures/ivory-paper.webp') center /
-    520px;
+  background: v.$color-surface url('/images/textures/ivory-paper.webp') center / 520px;
   box-shadow: v.$paper-shadow;
 }
 

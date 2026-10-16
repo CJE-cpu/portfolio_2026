@@ -22,14 +22,32 @@ function DeskIcon({ name }: { name: DeskItem | DeskView }) {
     top: 'M4 4h16v16H4V4Zm0 8h16M12 4v16',
     angle: 'm12 3 9 5-9 5-9-5 9-5Zm-9 5v9l9 5 9-5V8m-9 5v9',
   }
-  return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d={paths[name]} />
+    </svg>
+  )
 }
 
 export default function DeskIntro({ onEnter }: { onEnter: (target?: string) => void }) {
   const host = useRef<HTMLDivElement>(null)
-  const scene = useRef<Awaited<ReturnType<typeof import('./deskScene')['createDeskScene']>> | null>(null)
+  const scene = useRef<Awaited<
+    ReturnType<(typeof import('./deskScene'))['createDeskScene']>
+  > | null>(null)
   const enterRef = useRef(onEnter)
-  useEffect(() => { enterRef.current = onEnter }, [onEnter])
+  useEffect(() => {
+    enterRef.current = onEnter
+  }, [onEnter])
   const [hovered, setHovered] = useState<DeskItem | null>(null)
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading')
   const [lampOn, setLampOn] = useState(true)
@@ -37,46 +55,116 @@ export default function DeskIntro({ onEnter }: { onEnter: (target?: string) => v
 
   useEffect(() => {
     let cancelled = false
-    import('./deskScene').then(({ createDeskScene }) => {
-      if (cancelled || !host.current) return
-      try {
-        scene.current = createDeskScene(host.current, id => {
-          const target = items.find(item => item.id === id)?.target
-          if (target) enterRef.current(target)
-        }, setHovered, setLampOn)
-        setState('ready')
-      } catch { setState('error') }
-    }).catch(() => { if (!cancelled) setState('error') })
-    return () => { cancelled = true; scene.current?.dispose(); scene.current = null }
+    import('./deskScene')
+      .then(({ createDeskScene }) => {
+        if (cancelled || !host.current) return
+        try {
+          scene.current = createDeskScene(
+            host.current,
+            (id) => {
+              const target = items.find((item) => item.id === id)?.target
+              if (target) enterRef.current(target)
+            },
+            setHovered,
+            setLampOn,
+          )
+          setState('ready')
+        } catch {
+          setState('error')
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setState('error')
+      })
+    return () => {
+      cancelled = true
+      scene.current?.dispose()
+      scene.current = null
+    }
   }, [])
 
   return (
-    <motion.main className={styles.intro} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduce ? 0 : .3 }}>
+    <motion.main
+      className={styles.intro}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: reduce ? 0 : 0.3 }}
+    >
       <header className={styles.header}>
-        <span>CJE / PORTFOLIO</span>
+        <div className={styles.identity}>
+          <span>CJE / PORTFOLIO</span>
+          <h1>프론트엔드 개발자 최정은</h1>
+        </div>
         <button className={styles.enterButton} type="button" onClick={() => onEnter()}>
-          <span className={styles.enterLabel}><small>EXPLORE MY WORK</small><span>바로 들어가기</span></span>
+          <span className={styles.enterLabel}>
+            <small>EXPLORE MY WORK</small>
+            <span>바로 들어가기</span>
+          </span>
           <span className={styles.enterArrow} aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14m-6-6 6 6-6 6" />
+            </svg>
           </span>
         </button>
       </header>
       <div className={styles.stage}>
         <div ref={host} className={styles.canvas} />
-        {state !== 'ready' && <p className={styles.fallback} role="status">{state === 'loading' ? '책상을 준비하고 있어요…' : '3D 화면을 불러오지 못했어요. 아래 메뉴로 둘러보세요.'}</p>}
-        <p className={styles.hint}>{hovered ? `${items.find(item => item.id === hovered)?.name} · ${items.find(item => item.id === hovered)?.label}` : '책 · 노트 · 머그컵 · 램프 · 포스트잇'}</p>
+        {state !== 'ready' && (
+          <p className={styles.fallback} role="status">
+            {state === 'loading'
+              ? '책상을 준비하고 있어요…'
+              : '3D 화면을 불러오지 못했어요. 아래 메뉴로 둘러보세요.'}
+          </p>
+        )}
+        <p className={styles.hint}>
+          {hovered
+            ? `${items.find((item) => item.id === hovered)?.name} · ${items.find((item) => item.id === hovered)?.label}`
+            : '책 · 노트 · 머그컵 · 램프 · 포스트잇'}
+        </p>
       </div>
       <nav className={styles.objects} aria-label="책상 오브젝트 메뉴">
-        {items.map(item => <button key={item.id} type="button" data-object={item.id} disabled={item.id === 'lamp' && state !== 'ready'}
-          aria-pressed={item.id === 'lamp' ? lampOn : undefined}
-          onFocus={() => scene.current?.highlight(item.id)} onBlur={() => scene.current?.highlight(null)}
-          onMouseEnter={() => scene.current?.highlight(item.id)} onMouseLeave={() => scene.current?.highlight(null)}
-          onClick={() => { if (item.target) onEnter(item.target); else scene.current?.select(item.id) }}>
-          <span className={styles.objectIcon}><DeskIcon name={item.id} /></span>
-          <span className={styles.objectText}><span>{item.name}</span><strong>{item.id === 'lamp' ? (lampOn ? 'LIGHT ON' : 'LIGHT OFF') : item.label}</strong></span>
-        </button>)}
+        {items.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            data-object={item.id}
+            disabled={item.id === 'lamp' && state !== 'ready'}
+            aria-pressed={item.id === 'lamp' ? lampOn : undefined}
+            onFocus={() => scene.current?.highlight(item.id)}
+            onBlur={() => scene.current?.highlight(null)}
+            onMouseEnter={() => scene.current?.highlight(item.id)}
+            onMouseLeave={() => scene.current?.highlight(null)}
+            onClick={() => {
+              if (item.target) onEnter(item.target)
+              else scene.current?.select(item.id)
+            }}
+          >
+            <span className={styles.objectIcon}>
+              <DeskIcon name={item.id} />
+            </span>
+            <span className={styles.objectText}>
+              <span>{item.name}</span>
+              <strong>
+                {item.id === 'lamp' ? (lampOn ? 'LIGHT ON' : 'LIGHT OFF') : item.label}
+              </strong>
+            </span>
+          </button>
+        ))}
       </nav>
-      <footer className={styles.footer}><span>THINK · BUILD · PLAY</span><span>드래그해서 둘러보기 · 물건을 클릭해 이동하기</span></footer>
+      <footer className={styles.footer}>
+        <span>THINK · BUILD · PLAY</span>
+        <span>드래그해서 둘러보기 · 물건을 클릭해 이동하기</span>
+      </footer>
     </motion.main>
   )
 }

@@ -1,46 +1,181 @@
 @use '../../styles' as s;
-.skills_card {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+.container {
+  min-width: 0;
+}
+.heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
-  margin-top: s.$space-8;
 }
-
-.skill {
-  @include s.paper-surface;
-  position: relative;
-  padding: s.$space-6 s.$space-5;
-}
-
-.index {
-  color: s.$color-muted;
-  font: s.$font-size-caption s.$font-family-mono;
-}
-
-.icon {
-  display: block;
-  width: 48px;
-  height: 48px;
-  margin-top: s.$space-5;
-  object-fit: contain;
-}
-
-.skill h3 {
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
-  margin-top: s.$space-5;
-  font-size: s.$font-size-text;
-}
-
-.mark {
-  position: absolute;
-  top: 20px;
-  right: 18px;
+.eyebrow {
+  margin-bottom: 12px;
   color: s.$color-accent;
+  font:
+    700 13px/1.5 s.$font-family-mono,
+    monospace;
+  letter-spacing: 0.08em;
+}
+.introduction {
+  color: s.$color-muted;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 28px;
+  background: s.$color-surface url('/images/textures/ivory-paper.webp') center / 520px;
+  border: 1px solid s.$color-border;
+  border-radius: 3px 16px 3px 3px;
+  box-shadow: 3px 5px 0 #2947630c;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.category {
+  color: s.$color-accent;
+  font:
+    700 12px/1.5 s.$font-family-mono,
+    monospace;
+  letter-spacing: 0.06em;
+}
+.label {
+  font-size: 11px;
+  color: s.$color-muted;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #29476309;
+}
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 22px 0 16px;
+  h4 {
+    font-size: 22px;
+    line-height: 1.5;
+    word-break: keep-all;
+  }
+}
+.icons {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+}
+.technologies {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 18px;
+  li {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 5px 9px;
+    border: 1px dashed s.$color-border;
+    border-radius: 4px;
+  }
+}
+.description {
+  font-size: 16px;
+  line-height: 1.85;
+  color: s.$color-muted;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  margin-bottom: 24px;
+}
+.evidence {
+  margin-top: auto;
+  border-top: 1px solid s.$color-border;
+  padding-top: 16px;
+  color: s.$color-muted;
+  font-size: 13px;
+  line-height: 1.7;
+  span {
+    display: block;
+    margin-bottom: 6px;
+    font:
+      700 11px/1.5 s.$font-family-mono,
+      monospace;
+    letter-spacing: 0.08em;
+    color: s.$color-accent;
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 3px 9px 15px #29476312;
+  }
+}
+@media (max-width: 700px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .card {
+    padding: 22px;
+  }
+  .titleRow {
+    flex-wrap: wrap;
+    h4 {
+      font-size: 20px;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }
 
-@media (max-width: 900px) {
-  .skills_card {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.group {
+  margin-top: 36px;
+}
+.groupHeading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  border-bottom: 1px solid #c9c3b5;
+  padding-bottom: 14px;
+}
+.groupHeading h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #294763;
+}
+.groupHeading p {
+  font-size: 14px;
+  color: #526474;
+}
+.group .cards {
+  margin-top: 20px;
+}
+
+.cards > .card:only-child {
+  grid-column: 1 / -1;
 }
