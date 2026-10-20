@@ -5,7 +5,7 @@ type Project = {
   description: string
   team: number
   siteUrl?: string
-  github : string
+  github: string
 }
 
 const projectData: Project[] = [
@@ -15,10 +15,10 @@ const projectData: Project[] = [
     img: '/images/projects/boardlist.png',
     skill: 'react, firebase',
     description: `서비스 소개
-회원가입과 로그인 후 게시글을 작성할 수 있는 게시판 서비스입니다. React로 화면을 구성하고 Firebase를 활용했습니다.
+회원가입과 로그인 후 자신의 글을 작성할 수 있는 게시판 서비스입니다.
 
 구현 내용
-회원가입·로그인 입력에 검증 규칙을 적용해 필수 정보와 입력 조건을 확인하도록 구성했습니다.`,
+React로 게시판 화면을 구성하고 Firebase를 연동했습니다. 회원가입·로그인 폼에서 필수 항목과 입력 조건을 확인해 잘못된 입력을 안내하도록 구현했습니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/board_list.git',
   },
@@ -28,10 +28,10 @@ const projectData: Project[] = [
     img: '/images/projects/guestbook.png',
     skill: 'react, firebase',
     description: `서비스 소개
-사용자가 자신의 이야기를 남기고 관리할 수 있는 방명록 서비스입니다. React와 Firebase를 사용했습니다.
+방문자가 자신의 이야기를 남기고 프로필과 작성한 글을 관리할 수 있는 방명록 서비스입니다.
 
 구현 내용
-회원가입·로그인과 개인 프로필 설정을 제공하며, Firestore에 게시글을 저장하고 수정·삭제할 수 있도록 구성했습니다.`,
+React와 Firebase로 회원가입·로그인 및 프로필 설정 기능을 구현했습니다. Firestore에 게시글을 저장하고 수정·삭제하는 흐름을 연결했습니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/guestbook.git',
   },
@@ -41,10 +41,10 @@ const projectData: Project[] = [
     img: '/images/projects/shoppingmall.png',
     skill: 'react, firebase',
     description: `서비스 소개
-자동차 용품을 소개하는 쇼핑몰과 운영용 관리자 대시보드를 함께 구성한 개인 프로젝트입니다.
+자동차 용품을 살펴보는 쇼핑몰과 운영자가 정보를 관리하는 대시보드를 함께 만든 서비스입니다.
 
 구현 내용
-React와 Firebase를 활용해 상품을 살펴보는 화면을 만들었습니다. 관리자 계정으로 사용자 계정과 상품 정보를 관리하는 기능을 제공합니다.`,
+React로 상품 탐색 화면을 구성하고 Firebase를 연동했습니다. 관리자 계정에서 사용자 계정과 상품 정보를 관리할 수 있도록 운영 화면을 구현했습니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/shoppingmall.git',
   },
@@ -54,10 +54,10 @@ React와 Firebase를 활용해 상품을 살펴보는 화면을 만들었습니�
     img: '/images/projects/gsapcodepen.png',
     skill: 'react, gsap',
     description: `프로젝트 소개
-React 환경에서 GSAP을 활용한 웹 애니메이션을 구현한 실습 프로젝트입니다.
+GSAP 애니메이션 예제를 React 화면에 적용하며 움직임을 실습한 프로젝트입니다.
 
 구현 내용
-정적인 화면에 움직임을 더하는 표현을 다뤘습니다. 애니메이션 예제를 웹 화면에 적용하고 구현 결과를 살펴볼 수 있도록 구성했습니다.`,
+예제의 애니메이션을 웹 화면으로 구성하고 실행 결과를 확인할 수 있도록 만들었습니다. 정적인 요소에 움직임을 적용하는 방법과 React 환경에서의 애니메이션 구현을 연습했습니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/gsapcodepen_ex.git',
   },
@@ -67,10 +67,10 @@ React 환경에서 GSAP을 활용한 웹 애니메이션을 구현한 실습 프
     img: '/images/projects/dashboard.png',
     skill: 'nextjs',
     description: `프로젝트 소개
-수치 데이터를 그래프로 살펴볼 수 있도록 만든 Next.js 기반 대시보드입니다.
+수치 데이터를 여러 형태의 차트로 살펴볼 수 있는 Next.js 기반 대시보드입니다.
 
 구현 내용
-Chart.js를 활용해 여러 형태의 차트를 한 화면에 구성했습니다. 데이터를 시각적인 형태로 표현하는 화면 구현을 다뤘습니다.`,
+Chart.js로 데이터를 시각화하고 여러 차트를 한 화면에 배치했습니다. 숫자로 나열된 정보를 그래프로 표현해 항목별 데이터를 살펴볼 수 있도록 구성했습니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/dashboard.git',
   },
@@ -80,10 +80,10 @@ Chart.js를 활용해 여러 형태의 차트를 한 화면에 구성했습니�
     img: '/images/projects/teamproject.png',
     skill: 'html, css, javascript',
     description: `서비스 소개
-반려동물 용품을 소개하는 웹사이트 멍냥허브입니다. 3명이 함께 진행한 팀 프로젝트입니다.
+반려동물 용품을 소개하는 웹사이트 ‘멍냥허브’입니다. 3명이 함께 페이지를 제작한 팀 프로젝트입니다.
 
 팀 구현 내용
-HTML, CSS, JavaScript를 활용해 페이지 구조와 스타일, 사용자 동작을 구현했습니다. 반려동물 용품을 소개하는 웹 화면을 구성했습니다.`,
+HTML로 페이지 구조를 만들고 CSS로 상품 소개 화면을 구성했습니다. JavaScript를 활용해 사용자 동작에 반응하는 기능을 더했습니다.`,
     team: 3,
     github: 'https://github.com/CJE-cpu/teamproject.git',
   },
@@ -93,26 +93,26 @@ HTML, CSS, JavaScript를 활용해 페이지 구조와 스타일, 사용자 동�
     img: '/images/projects/lcode.png',
     skill: 'react, firebase, OpenAI API',
     description: `서비스 소개
-사용자가 여행 일정을 직접 구성하고 AI 추천을 참고할 수 있는 모바일 웹 서비스 L:CODE입니다.
+여행 일정을 직접 구성하면서 AI 추천을 참고할 수 있는 모바일 웹 서비스 ‘L:CODE’입니다.
 
 팀 구현 내용
-5명이 React와 Firebase를 활용해 개발했습니다. OpenAI API를 연동해 여행 일정을 추천받고 계획을 세울 때 참고할 수 있도록 구성했습니다.`,
+5명이 React와 Firebase를 활용해 개발했습니다. OpenAI API를 연동해 여행 일정 추천을 제공하고, 사용자가 자신의 여행 계획을 구성할 때 참고할 수 있도록 연결했습니다.`,
     team: 5,
     github: 'https://github.com/CJE-cpu/LCODE.git',
   },
   {
     name: '스터디룸 예약 웹사이트',
-    siteUrl: 'https://studyroom-coral.vercel.app/',
+    siteUrl: 'https://studyroom-pt9j.onrender.com',
     img: '/images/projects/studyroom.png',
-    skill: 'react, java, MYSQL',
+    skill: 'React, TypeScript, Spring Boot, MySQL',
     description: `서비스 소개 · 개발 중
-React·TypeScript와 Spring Boot·MySQL로 공간 탐색부터 예약까지 연결하는 서비스를 개발하고 있습니다.
+공간을 탐색하고 날짜와 시간을 선택해 예약하는 서비스입니다. React·TypeScript 프론트엔드와 Spring Boot·MySQL 백엔드를 연결했습니다.
 
-문제와 해결
-중복 가입을 막기 위해 서버 입력 검증과 DB 이메일 중복 제약조건을 적용했습니다. 비밀번호는 PBKDF2 해시로 저장하고, 세션 기반 로그인·로그아웃과 회원 조회를 연결했습니다.
+구현 내용
+세션 기반 로그인, 예약 생성·조회·취소를 구현했습니다. 비밀번호는 PBKDF2 해시로 저장하며, 예약 인원과 시간을 검증하고 본인 예약만 취소할 수 있도록 처리했습니다.
 
-검증과 다음 단계
-H2 기반 테스트로 가입·로그인·중복 이메일 거절과 로그아웃 후 인증 거절을 확인했습니다. 예약은 현재 브라우저 저장 방식이며, 서버·DB 연결을 진행할 예정입니다.`,
+문제 해결과 검증
+같은 공간·시간의 중복 예약을 막기 위해 서버 검증과 DB 고유 제약조건을 적용했습니다. 로컬 서버에서 로그인·예약·취소 흐름과 중복 예약·다른 사용자 예약 취소 거절을 확인했습니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/studyroom.git',
   },
@@ -121,10 +121,14 @@ H2 기반 테스트로 가입·로그인·중복 이메일 거절과 로그아�
     siteUrl: 'https://web-puce-tau-33.vercel.app/',
     img: '/images/projects/penguingame.png',
     skill: 'react, python',
-    description: `로그인 후 게임을 완료하면 기록을 남길 수 있는 웹사이트입니다.`,
+    description: `서비스 소개
+로그인 후 펭귄 게임을 즐기고, 게임을 완료하면 플레이 기록을 남길 수 있는 웹사이트입니다.
+
+구현 내용
+React와 Python을 사용한 개인 프로젝트입니다. 로그인부터 게임 플레이, 완료 후 기록 저장까지 이어지는 흐름으로 구성했습니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/penguingame.git',
-  }
+  },
 ]
 
 export default projectData
