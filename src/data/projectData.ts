@@ -129,6 +129,19 @@ React와 Python을 사용한 개인 프로젝트입니다. 로그인부터 게�
     team: 1,
     github: 'https://github.com/CJE-cpu/penguingame.git',
   },
+  {
+    name: 'AI 챗봇',
+    siteUrl: 'https://nextjschatbot-zeta.vercel.app/',
+    img: '/images/projects/chatbot.png',
+    skill: 'nextJS',
+    description: `서비스 소개
+로그인 후 펭귄 게임을 즐기고, 게임을 완료하면 플레이 기록을 남길 수 있는 웹사이트입니다.
+
+구현 내용
+React와 Python을 사용한 개인 프로젝트입니다. 로그인부터 게임 플레이, 완료 후 기록 저장까지 이어지는 흐름으로 구성했습니다.`,
+    team: 1,
+    github: 'https://github.com/CJE-cpu/nextJS_chatbot.git',
+  },
 ]
 
 export default projectData

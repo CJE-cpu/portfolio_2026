@@ -1,7 +1,10 @@
 @use '../../styles' as s;
 .about_container {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
   align-items: center;
   gap: clamp(24px, 4vw, 56px);
   min-height: 440px;
@@ -27,6 +30,23 @@
   color: s.$color-accent;
 }
 
+.highlight {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  i {
+    position: absolute;
+    z-index: -1;
+    bottom: 0.06em;
+    left: -1%;
+    width: 102%;
+    height: 0.38em;
+    background: #fab95ba6;
+    border-radius: 45% 8% 35% 12%;
+    transform-origin: left;
+    pointer-events: none;
+  }
+}
 .info {
   margin-top: s.$space-6;
   color: s.$color-muted;
@@ -77,62 +97,7 @@
   font-size: 15px;
   text-underline-offset: 5px;
 }
-.experienceNotes {
-  display: grid;
-  gap: 16px;
-  min-width: 0;
-}
-.notesLabel {
-  font:
-    700 13px/1.6 s.$font-family-mono,
-    sans-serif;
-  letter-spacing: 0.06em;
-  color: s.$color-muted;
-}
-.experienceCard {
-  position: relative;
-  padding: 24px 28px;
-  border: 1px solid s.$color-border;
-  border-radius: 3px 14px 3px 3px;
-  background: s.$color-surface url('/images/textures/ivory-paper.webp') center / 520px;
-  box-shadow: 3px 4px 0 #2947630d;
-  h3 {
-    margin: 10px 0;
-    font-size: 21px;
-    line-height: 1.5;
-  }
-  p {
-    font-size: 15px;
-    line-height: 1.85;
-    color: s.$color-muted;
-    word-break: keep-all;
-    overflow-wrap: anywhere;
-  }
-}
-.noteNumber {
-  font:
-    700 12px/1.5 s.$font-family-mono,
-    monospace;
-  letter-spacing: 0.08em;
-  color: s.$color-accent;
-}
-.evidence {
-  display: block;
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px dashed s.$color-border;
-  font-size: 12px;
-  color: s.$color-muted;
-}
-.progressNote {
-  color: s.$color-muted;
-  font-size: 13px;
-  line-height: 1.7;
-}
 @media (max-width: 560px) {
-  .experienceCard {
-    padding: 20px;
-  }
   .profile h3 {
     font-size: clamp(28px, 7vw, 36px);
   }

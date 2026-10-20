@@ -15,22 +15,22 @@ const skillData: SkillGroup[] = [
     group: 'frontend',
     title: '사용자 흐름을 만드는 화면',
     label: '주력 기술',
-    technologies: ['React', 'TypeScript'],
+    technologies: ['React', 'JavaScript', 'TypeScript'],
     description:
       '컴포넌트로 화면을 구성하고, API 요청 상태에 따라 로딩·오류·결과를 표시합니다. 회원가입부터 로그인 후 홈 이동까지 연결했습니다.',
     evidence: 'Studyroom · 회원가입·로그인 화면',
-    icons: ['/images/skills/react.svg', '/images/skills/typescript.svg'],
+    icons: ['/images/skills/react.svg', '/images/skills/javascript.svg', '/images/skills/typescript.svg'],
   },
   {
     category: 'UI & INTERACTION',
     group: 'frontend',
     title: '주제에 맞는 화면과 움직임',
     label: '구현 경험',
-    technologies: ['HTML', 'SCSS'],
+    technologies: ['HTML', 'CSS', 'SASS', 'Tailwind CSS'],
     description:
       '종이 테마의 반응형 UI와 3D 책상, 프로젝트 페이지 넘김을 구현했습니다. 화면 크기와 움직임 감소 설정을 고려합니다.',
     evidence: '포트폴리오 · 3D 인트로·프로젝트 노트',
-    icons: ['/images/skills/html.svg', '/images/skills/css.svg'],
+    icons: ['/images/skills/html.svg', '/images/skills/css.svg', '/images/skills/sass.svg', '/images/skills/tailwind.svg'],
   },
   {
     category: 'BACKEND',
