@@ -5,7 +5,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { createPaperGeometry, createShadeGeometry } from './deskGeometry'
 import { createRoomTexture } from './deskTextures'
 
-export type DeskItem = 'book' | 'note' | 'mug' | 'lamp' | 'postit'
+export type DeskItem = 'robot' | 'backpack' | 'laptop' | 'book' | 'note' | 'mug' | 'lamp' | 'postit'
 export type DeskView = 'front' | 'top' | 'angle'
 
 export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => void, onHover: (id: DeskItem | null) => void, onLamp: (on: boolean) => void) {
@@ -25,8 +25,8 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   scene.environment = environment.texture
   scene.environmentIntensity = .22
   environmentScene.dispose(); environmentGenerator.dispose()
-  scene.background = new THREE.Color(0x626e78)
-  scene.fog = new THREE.Fog(0x626e78, 30, 65)
+  scene.background = new THREE.Color(0x547792)
+  scene.fog = new THREE.Fog(0x547792, 30, 65)
   const camera = new THREE.PerspectiveCamera(38, 1, .1, 100)
   const materials: THREE.Material[] = []
   const textures: THREE.Texture[] = []
@@ -35,7 +35,7 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
     materials.push(m)
     return m
   }
-  const cream = mat(0xfff9e9), blue = mat(0x376797), wood = mat(0xd9b48c), dark = mat(0x334a51), brass = mat(0xb39355, .35)
+  const cream = mat(0xe8e2db), blue = mat(0x547792), wood = mat(0xc7af91), dark = mat(0x1a3263), brass = mat(0xb39355, .35)
   // Procedural surface maps stay local and require no external image downloads.
   const surface = (kind: 'wood' | 'paper') => {
     const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 512
@@ -82,7 +82,7 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   const cylinder = (parent: THREE.Object3D, r: number, h: number, material: THREE.Material, x = 0, y = 0, z = 0) => mesh(parent, new THREE.CylinderGeometry(r, r, h, 40), material, x, y, z)
   const tube = (parent: THREE.Object3D, points: number[][], radius: number, material: THREE.Material) =>
     mesh(parent, new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(([x, y, z]) => new THREE.Vector3(x, y, z))), 28, radius, 8, false), material)
-  const pageEdge = mat(0xd3c7ad), silver = mat(0xbac3c4, .3), coral = mat(0xc8694b)
+  const pageEdge = mat(0xd3c7ad), silver = mat(0xbac3c4, .3), coral = mat(0xfab95b)
   silver.metalness = .65; brass.metalness = .5
   const label = (parent: THREE.Object3D, title: string, subtitle: string, w: number, d: number, x: number, y: number, z: number, background: string, grid = false) => {
     const canvas = document.createElement('canvas')
@@ -93,7 +93,9 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
       ctx.strokeStyle = '#d2dce1'; ctx.lineWidth = 1
       for (let n = 32; n < 768; n += 32) { ctx.beginPath(); ctx.moveTo(n, 0); ctx.lineTo(n, 768); ctx.moveTo(0, n); ctx.lineTo(768, n); ctx.stroke() }
     }
-    ctx.fillStyle = background === '#376797' ? '#fff9e9' : '#294763'
+    const color = new THREE.Color(background)
+    const darkBackground = color.r * .2126 + color.g * .7152 + color.b * .0722 < .35
+    ctx.fillStyle = darkBackground ? '#E8E2DB' : '#1A3263'
     const ink = ctx.fillStyle
     ctx.textAlign = 'center'
     const lines = title.split('\n')
@@ -110,7 +112,26 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
       ctx.strokeRect(140, 430, 488, 190)
       ctx.beginPath(); ctx.moveTo(140, 479); ctx.lineTo(628, 479); ctx.stroke()
       for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.arc(170 + i * 32, 456, 7, 0, Math.PI * 2); ctx.fill() }
-      ctx.font = '900 100px monospace'; ctx.fillText('</>', 384, 589)
+      // A browser gallery represents finished work, not source code.
+      ctx.fillStyle = '#FAB95B'; ctx.fillRect(174, 505, 175, 80)
+      ctx.fillStyle = '#a6bccb'; ctx.fillRect(376, 505, 215, 30)
+      ctx.fillStyle = ink; ctx.fillRect(376, 555, 160, 14)
+
+    } else if (title === 'GITHUB') {
+      // Repository history: three commits connected to a feature branch.
+      ctx.beginPath(); ctx.moveTo(250, 345); ctx.lineTo(250, 595);
+      ctx.moveTo(250, 530); ctx.bezierCurveTo(250, 450, 505, 500, 505, 390); ctx.stroke()
+      for (const [x, y] of [[250, 345], [250, 595], [505, 390]]) {
+        ctx.fillStyle = background; ctx.beginPath(); ctx.arc(x, y, 36, 0, Math.PI * 2); ctx.fill(); ctx.stroke()
+      }
+      ctx.fillStyle = ink
+    } else if (title === 'SKILLS') {
+      // Stacked skill cards rather than another source-code pictogram.
+      ctx.font = '900 55px monospace'
+      for (const [index, word] of ['REACT', 'JAVA', 'SQL'].entries()) {
+        const y = 320 + index * 105
+        ctx.strokeRect(155, y, 458, 85); ctx.fillText(word, 384, y + 61)
+      }
     } else if (title.includes('ABOUT')) {
       ctx.beginPath(); ctx.arc(384, 462, 54, 0, Math.PI * 2); ctx.stroke()
       ctx.beginPath(); ctx.arc(384, 616, 94, Math.PI, Math.PI * 2); ctx.stroke()
@@ -120,10 +141,17 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
     } else {
       ctx.font = '900 210px monospace'; ctx.fillText(title === 'LIGHT' ? '○' : '</>', 384, 510)
     }
+    if (title === 'SKILLS') {
+      // The curved cup is too small for a full card layout: use one bold word.
+      ctx.fillStyle = background; ctx.fillRect(0, 0, 768, 768)
+      ctx.fillStyle = ink; ctx.font = '900 172px sans-serif'
+      ctx.fillText('SKILLS', 384, 445, 700)
+      ctx.fillRect(204, 500, 360, 18)
+    }
     ctx.font = 'bold 40px monospace'
     ctx.fillText(subtitle, 384, 710, 660)
     // Light edge scuffs leave the main titles intact.
-    ctx.strokeStyle = background === '#376797' ? 'rgba(255,249,233,.2)' : 'rgba(119,96,60,.1)'
+    ctx.strokeStyle = darkBackground ? 'rgba(255,249,233,.2)' : 'rgba(119,96,60,.1)'
     ctx.lineWidth = 2
     for (let i = 0; i < 6; i++) {
       ctx.beginPath(); ctx.moveTo(12 + i * 8, 740 - i * 2); ctx.lineTo(35 + i * 8, 737 - i * 2); ctx.stroke()
@@ -145,18 +173,87 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   // Fine grooves and a desk mat give the table a tangible surface.
   const grain = mat(0xc19c76)
   for (const z of [-.9, .9]) box(table, 8.5, .002, .007, grain, 0, -.028, z)
-  box(table, 5.9, .025, 3.55, mat(0xe4e5d9), -.2, .005, .3)
+  box(table, 5.9, .025, 3.55, mat(0x547792), -.2, .005, .3)
   const groups = new Map<DeskItem, THREE.Group>()
   const group = (id: DeskItem, x: number, z: number, rotation = 0) => {
     const g = new THREE.Group(); g.position.set(x, .04, z); g.rotation.y = rotation; g.userData.id = id; scene.add(g); groups.set(id, g); return g
   }
+
+  // Laptop: aluminium shell, inset keyboard, trackpad and hinged display.
+  const laptop = group('laptop', .1, -1.48, -.04)
+  box(laptop, 2.55, .10, 1.48, silver, 0, .07)
+  box(laptop, 2.30, .015, .78, dark, 0, .13, -.17)
+  for (let row = 0; row < 4; row++) for (let col = 0; col < 12; col++)
+    box(laptop, .15, .018, .12, cream, -1.03 + col * .187, .148, -.45 + row * .18)
+  box(laptop, .7, .012, .28, pageEdge, 0, .135, .48)
+  const hinge = cylinder(laptop, .055, 2.3, dark, 0, .12, -.68)
+  hinge.rotation.z = Math.PI / 2
+  const display = new THREE.Group()
+  display.position.set(0, .14, -.67); display.rotation.x = -.18; laptop.add(display)
+  box(display, 2.55, 1.65, .085, dark, 0, .82)
+  const screen = label(display, 'PROJECTS', 'SELECTED WORK / CJE', 2.35, 1.38, 0, .83, .047, '#547792')
+  screen.rotation.x = 0
+  const screenMaterial = screen.material as THREE.MeshStandardMaterial
+  screenMaterial.emissive.set(0x547792); screenMaterial.emissiveMap = screenMaterial.map
+  screenMaterial.emissiveIntensity = .28
+  mesh(display, new THREE.SphereGeometry(.023, 8, 6), silver, 0, 1.59, .05)
+  for (const x of [-1.28, 1.28]) box(laptop, .012, .035, .15, dark, x, .075, .25)
+
+  // A small studio robot stands to the left of the table.
+  // In front of the tabletop silhouette so the greeting remains visible.
+  const robot = new THREE.Group(); robot.position.set(-4.65, -2.80, 3.35); scene.add(robot)
+  robot.userData.id = 'robot'; groups.set('robot', robot)
+  const robotArms: THREE.Group[] = []
+  const robotShell = mat(0xe8e2db, .45)
+  box(robot, .95, .95, .65, robotShell, 0, 1.15)
+  box(robot, 1.15, .7, .75, robotShell, 0, 2.02)
+  box(robot, .95, .43, .045, dark, 0, 2.03, .39)
+  const eyeMaterial = mat(0x9ad6dc, .3)
+  eyeMaterial.emissive.set(0x61a9bc); eyeMaterial.emissiveIntensity = .6
+  for (const x of [-.25, .25]) {
+    mesh(robot, new THREE.SphereGeometry(.085, 16, 12), eyeMaterial, x, 2.06, .44)
+    cylinder(robot, .12, .55, dark, x, .54)
+    box(robot, .4, .19, .62, dark, x, .12, .13)
+  }
+  box(robot, .26, .035, .025, cream, 0, 1.88, .43)
+  cylinder(robot, .035, .25, brass, 0, 2.49)
+  mesh(robot, new THREE.SphereGeometry(.08, 12, 8), coral, 0, 2.65)
+  for (const x of [-.65, .65]) {
+    mesh(robot, new THREE.SphereGeometry(.16, 16, 12), brass, x, 1.45)
+    const arm = new THREE.Group(); arm.position.set(x, 1.45, 0); robot.add(arm)
+    robotArms.push(arm)
+    box(arm, .22, .65, .26, robotShell, 0, -.37)
+    mesh(arm, new THREE.SphereGeometry(.15, 16, 12), dark, 0, -.73)
+    arm.rotation.z = x < 0 ? -.22 : .22
+  }
+  box(robot, .44, .33, .025, blue, 0, 1.19, .34)
+  for (let i = 0; i < 3; i++) box(robot, .25, .022, .025, brass, 0, 1.11 + i * .08, .36)
+
+  // Canvas backpack rests on the floor beside the right table legs.
+  const backpack = new THREE.Group()
+  backpack.position.set(4.95, -2.80, 1.15); backpack.rotation.y = -.35; scene.add(backpack)
+  backpack.userData.id = 'backpack'; groups.set('backpack', backpack)
+  const fabric = mat(0x547792, .95)
+  fabric.bumpMap = paperSurface; fabric.bumpScale = .025
+  box(backpack, 1.15, 1.55, .65, fabric, 0, .85)
+  box(backpack, .94, .65, .24, fabric, 0, .48, .42)
+  box(backpack, 1.12, .16, .7, dark, 0, .12)
+  tube(backpack, [[-.35,1.54,.34],[0,1.68,.34],[.35,1.54,.34]], .018, brass)
+  tube(backpack, [[-.22,1.6,0],[-.2,1.87,0],[.2,1.87,0],[.22,1.6,0]], .045, dark)
+  for (const x of [-.37, .37])
+    tube(backpack, [[x,1.5,-.28],[x,1.12,-.55],[x,.35,-.48],[x,.25,-.27]], .065, dark)
+  box(backpack, .78, .018, .025, brass, 0, .75, .55)
+  box(backpack, .045, .14, .025, silver, .25, .69, .57)
+  box(backpack, .3, .18, .025, cream, 0, .44, .56)
+
+  const bookCloth = mat(0x1a3263); bookCloth.bumpMap = paperSurface; bookCloth.bumpScale = .015
   const book = group('book', -2.5, -.35, -.18)
-  box(book, 1.6, .08, 2.05, blue, 0, .04)
+  box(book, 1.6, .08, 2.05, bookCloth, 0, .04)
   box(book, 1.49, .25, 1.94, cream, .025, .205)
-  box(book, 1.6, .08, 2.05, blue, 0, .37)
-  box(book, .12, .36, 2.05, blue, -.76, .2)
-  label(book, 'PROJECTS', 'SELECTED WORK / CJE', 1.43, 1.9, .04, .412, 0, '#376797')
-  box(book, .13, .012, .48, mat(0xc8694b), .45, .09, 1.05)
+  box(book, 1.6, .08, 2.05, bookCloth, 0, .37)
+  box(book, .12, .36, 2.05, bookCloth, -.76, .2)
+  label(book, 'GITHUB', 'REPOS / COMMITS', 1.43, 1.9, .04, .412, 0, '#1A3263')
+  box(book, .13, .012, .48, mat(0xfab95b), .45, .09, 1.05)
   // Thin edge lines suggest layered pages rather than a solid block.
   for (let i = 0; i < 9; i++) {
     const y = .105 + i * .024
@@ -166,10 +263,10 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   for (const z of [-.73, .73]) box(book, .014, .26, .045, brass, -.824, .2, z)
   tube(book, [[.45, .095, 1.03], [.45, .08, 1.17], [.46, .025, 1.25]], .035, coral)
 
-  const note = group('note', -.05, .55, .1)
+  const note = group('note', -.05, 1.25, .1)
   box(note, 2.35, .065, 1.95, dark, 0, .04)
   box(note, 2.24, .06, 1.84, cream, 0, .105)
-  const notePage = label(note, 'ABOUT\nME', 'THINK. BUILD. PLAY.', 2.2, 1.8, 0, .138, 0, '#fff9e9', true)
+  const notePage = label(note, 'ABOUT\nME', 'THINK. BUILD. PLAY.', 2.2, 1.8, 0, .138, 0, '#E8E2DB', true)
   notePage.geometry.dispose(); notePage.geometry = createPaperGeometry(2.2, 1.8, .095)
   const notePaper = notePage.material as THREE.MeshStandardMaterial
   notePaper.side = THREE.DoubleSide; notePage.castShadow = true
@@ -186,11 +283,12 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   const ferrule = cylinder(pencil, .043, .1, silver, 0, 0, .59); ferrule.rotation.x = Math.PI / 2
   const eraser = cylinder(pencil, .041, .13, coral, 0, 0, .7); eraser.rotation.x = Math.PI / 2
 
-  const mug = group('mug', 2.8, .85, .3)
+  const mug = group('mug', 2.8, .65, .48)
+  mug.scale.setScalar(1.15)
   const saucerProfile = [[0, .025], [.43, .025], [.58, .035], [.65, .065], [.66, .085], [.64, .098], [.59, .077], [.45, .06], [0, .06]].map(([r, y]) => new THREE.Vector2(r, y))
   mesh(mug, new THREE.LatheGeometry(saucerProfile, 64), cream)
   const profile = [[0, .075], [.3, .075], [.35, .08], [.385, .095], [.4, .12], [.44, .78], [.434, .804], [.415, .816], [.393, .807], [.38, .78], [.34, .18], [.31, .15], [0, .15]].map(([x, y]) => new THREE.Vector2(x, y))
-  const ceramic = new THREE.MeshPhysicalMaterial({ color: 0x376797, roughness: .22, clearcoat: .65, clearcoatRoughness: .16 })
+  const ceramic = new THREE.MeshPhysicalMaterial({ color: 0xe8e2db, roughness: .22, clearcoat: .65, clearcoatRoughness: .16 })
   materials.push(ceramic)
   mesh(mug, new THREE.LatheGeometry(profile, 64), ceramic)
   cylinder(mug, .36, .02, mat(0x4a3022), 0, .68)
@@ -206,18 +304,18 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   materials.push(stainMaterial)
   const stain = mesh(mug, new THREE.RingGeometry(.47, .485, 48, 1, .2, Math.PI * 1.4), stainMaterial, 0, .078)
   stain.rotation.x = -Math.PI / 2; stain.castShadow = false
-  const mugPrint = label(mug, 'SKILLS', 'CODE & COFFEE', .62, .51, 0, .42, .445, '#376797')
+  const mugPrint = label(mug, 'SKILLS', '', .62, .51, 0, .42, .445, '#1A3263')
   // A curved decal follows the exact taper of the cup, with only a tiny offset.
   mugPrint.geometry.dispose()
   mugPrint.geometry = new THREE.CylinderGeometry(.432, .406, .43, 48, 1, true, -.9, 1.8)
   mugPrint.position.set(0, .43, 0)
   mugPrint.rotation.x = 0
   const printMaterial = mugPrint.material as THREE.MeshStandardMaterial
-  printMaterial.roughness = .24; printMaterial.bumpScale = 0
+  printMaterial.roughness = .85; printMaterial.bumpScale = 0
 
   const lamp = group('lamp', 2.8, -1.65)
   cylinder(lamp, .57, .12, dark, 0, .08)
-  label(lamp, 'LIGHT', 'ON / OFF', .64, .55, 0, .145, .18, '#fff9e9')
+  label(lamp, 'LIGHT', 'ON / OFF', .64, .55, 0, .145, .18, '#E8E2DB')
   cylinder(lamp, .055, 1.7, brass, 0, .95)
   // Join the two pivots exactly, so the arm no longer floats past the joints.
   const armStart = new THREE.Vector3(0, 1.7, 0), armEnd = new THREE.Vector3(-.65, 1.96, 0)
@@ -232,7 +330,7 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   const shadeRim = mesh(lamp, new THREE.TorusGeometry(.62, .025, 10, 48), brass, -.65, 1.58); shadeRim.rotation.x = Math.PI / 2
   const powerSwitch = box(lamp, .14, .06, .2, coral, .32, .165, -.15)
   tube(lamp, [[0, .07, -.45], [-.1, .01, -.65], [-.8, 0, -.75], [-1.15, -.08, -.98], [-1.15, -.85, -1.13]], .025, dark)
-  mesh(lamp, createShadeGeometry(), mat(0x537575, .32), -.65, 1.58)
+  mesh(lamp, createShadeGeometry(), mat(0x1a3263, .32), -.65, 1.58)
   cylinder(lamp, .105, .18, cream, -.65, 1.92)
   const bulbMat = mat(0xffe9b1); bulbMat.emissive.set(0xffc477); bulbMat.emissiveIntensity = 2.5
   mesh(lamp, new THREE.SphereGeometry(.16, 16, 12), bulbMat, -.65, 1.62)
@@ -247,13 +345,14 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   light.shadow.bias = -.0001; light.shadow.normalBias = .015
   lamp.add(light, light.target)
 
-  const postit = group('postit', .1, -1.6, -.12)
-  box(postit, 1.28, .05, 1.04, mat(0xf2d67f), 0, .04)
+  // Keep the contact note clear of the laptop and the notebook, near the front edge.
+  const postit = group('postit', 2.25, 2.02, -.12)
+  box(postit, 1.28, .05, 1.04, mat(0xfab95b), 0, .04)
   for (let i = 0; i < 3; i++) box(postit, 1.28, .003, .006, pageEdge, 0, .025 + i * .012, .522)
   const tapeMaterial = new THREE.MeshStandardMaterial({ color: 0xfff4d8, transparent: true, opacity: .65, roughness: 1 })
   materials.push(tapeMaterial)
   const tape = box(postit, .5, .007, .16, tapeMaterial, 0, .074, -.45); tape.rotation.y = .12
-  const stickyPage = label(postit, 'SAY\nHELLO', 'CONTACT ME', 1.26, 1.02, 0, .067, 0, '#f2d67f')
+  const stickyPage = label(postit, 'SAY\nHELLO', 'CONTACT ME', 1.26, 1.02, 0, .067, 0, '#FAB95B')
   stickyPage.geometry.dispose(); stickyPage.geometry = createPaperGeometry(1.26, 1.02, .16)
   const stickyPaper = stickyPage.material as THREE.MeshStandardMaterial
   stickyPaper.side = THREE.DoubleSide; stickyPage.castShadow = true
@@ -271,18 +370,30 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   const plasterTexture = createRoomTexture('plaster'), clayTexture = createRoomTexture('clay')
   const soilTexture = createRoomTexture('soil'), leafTexture = createRoomTexture('leaf')
   textures.push(plasterTexture, clayTexture, soilTexture, leafTexture)
-  const floorMaterial = mat(0x7c7a73, .82)
+  const floorMaterial = mat(0x8e8880, .82)
   roomSurface(floorMaterial, woodSurface, 40, 140, .018)
   const floor = mesh(scene, new THREE.PlaneGeometry(200, 200), floorMaterial, 0, -2.83); floor.rotation.x = -Math.PI / 2
   // A quiet studio surrounds the desk: plaster wall, window, skirting and a plant.
   const room = new THREE.Group(); scene.add(room)
-  const plaster = mat(0x73808a), trim = mat(0xa4abaa)
+  const plaster = mat(0x9aa9b1), trim = mat(0xa4abaa)
   roomSurface(plaster, plasterTexture, 30, 8, .018)
   roomSurface(trim, woodSurface, 2, 3, .008)
   box(room, 60, 16, .2, plaster, 0, 5, -5.8)
   box(room, 60, .18, .12, trim, 0, -2.65, -5.65)
+
+  // Warm lower wall and a framed graphic print make the room feel inhabited.
+  const wainscot = mat(0x547792, .85)
+  box(room, 60, 2.3, .08, wainscot, 0, -1.48, -5.65)
+  box(room, 60, .065, .12, brass, 0, -.30, -5.57)
+  box(room, 2.0, 2.6, .13, dark, 3.7, 2.3, -5.56)
+  box(room, 1.83, 2.43, .025, cream, 3.7, 2.3, -5.48)
+  const printSun = mesh(room, new THREE.CircleGeometry(.53, 40), coral, 3.7, 2.7, -5.46)
+  printSun.castShadow = false
+  box(room, 1.4, .08, .02, blue, 3.7, 1.76, -5.45)
+  box(room, .92, .08, .02, brass, 3.45, 1.55, -5.45)
+
   // Painted frames use a separate material from the wooden room trim.
-  const windowFrame = mat(0xc1c6c1, .48)
+  const windowFrame = mat(0xe8e2db, .48)
   windowFrame.metalness = .08
   const skyCanvas = document.createElement('canvas')
   skyCanvas.width = 16; skyCanvas.height = 256
@@ -350,7 +461,7 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   const seam = mat(0x65665f)
   for (let i = -12; i <= 12; i++) box(room, .014, .006, 50, seam, i * 1.4, -2.824, 4)
   scene.add(new THREE.HemisphereLight(0xe1efff, 0xa69578, .5))
-  const sun = new THREE.DirectionalLight(0xffe1ad, .22); sun.position.set(-4.8, 7, -4); sun.castShadow = false
+  const sun = new THREE.DirectionalLight(0xfff4e8, .22); sun.position.set(-4.8, 7, -4); sun.castShadow = false
   sun.shadow.mapSize.set(1024, 1024); sun.shadow.camera.left = -8; sun.shadow.camera.right = 8; sun.shadow.camera.top = 8; sun.shadow.camera.bottom = -8; sun.shadow.normalBias = .035; scene.add(sun)
   const reduced = matchMedia('(prefers-reduced-motion: reduce)')
   // Project window light through a shadow-casting light, not painted floor planes.
@@ -361,7 +472,7 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   for (const x of [30, 272]) for (const y of [30, 272]) context.fillRect(x, y, 210, 210)
   const lightTexture = new THREE.CanvasTexture(lightCanvas)
   lightTexture.colorSpace = THREE.SRGBColorSpace; textures.push(lightTexture)
-  const windowSun = new THREE.SpotLight(0xffe6bf, 55, 30, .64, .5, 2)
+  const windowSun = new THREE.SpotLight(0xfff4e8, 55, 30, .64, .5, 2)
   windowSun.position.set(-4.8, 4.25, -5.15)
   windowSun.target.position.set(-.3, -.25, .7)
   windowSun.map = lightTexture; windowSun.castShadow = true
@@ -369,7 +480,7 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   windowSun.shadow.normalBias = .008; windowSun.shadow.bias = -.00005
   windowSun.shadow.camera.near = .2; windowSun.shadow.camera.far = 30
   scene.add(windowSun, windowSun.target)
-  const windowFill = new THREE.PointLight(0xc7e3ff, 4, 12, 2)
+  const windowFill = new THREE.PointLight(0xe2eaf0, 4, 12, 2)
   windowFill.position.set(-4.8, 2.4, -4.8); scene.add(windowFill)
   let hovered: DeskItem | null = null
   let lampOn = true
@@ -383,7 +494,11 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
     while (object && !object.userData.id) object = object.parent
     return (object?.userData.id as DeskItem | undefined) ?? null
   }
+  let robotTime = 3, backpackTime = 3
+  let robotActive = false, backpackActive = false
   const select = (id: DeskItem) => {
+    if (id === 'robot') { robotTime = 0; robotActive = !robotActive; onPick(id); return }
+    if (id === 'backpack') { backpackTime = 0; backpackActive = !backpackActive; onPick(id); return }
     if (id === 'lamp') { lampOn = !lampOn; powerSwitch.rotation.x = lampOn ? -.15 : .15; onLamp(lampOn) }
     else onPick(id)
   }
@@ -414,18 +529,20 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
   let currentView: DeskView | null = 'angle'
   const direction = directions.angle.clone()
   const fitCamera = () => {
-    // Fit the tabletop and tall lamp inside the space between the title and menu.
+    // Frame the whole scene first, then move closer to emphasize tabletop objects.
     const focus = new THREE.Vector3(0, .65, 0)
     camera.position.copy(focus).add(direction); camera.lookAt(focus)
     camera.updateMatrixWorld()
     const inverseRotation = camera.quaternion.clone().invert()
     const tangent = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))
     let distance = 0
-    for (const x of [-4.5, 4.5]) for (const y of [-.35, 2.3]) for (const z of [-2.8, 2.8]) {
+    for (const x of [-5.85, 5.85]) for (const y of [-2.8, 2.3]) for (const z of [-2.8, 2.8]) {
       const point = new THREE.Vector3(x, y, z).sub(focus).applyQuaternion(inverseRotation)
       distance = Math.max(distance, point.z + Math.abs(point.x) / (tangent * camera.aspect * .92), point.z + Math.abs(point.y) / (tangent * .57))
     }
-    camera.position.copy(focus).addScaledVector(direction, distance)
+    // Keep a little more side room on portrait screens for the robot and backpack.
+    const framingScale = camera.aspect < 1 ? .90 : .80
+    camera.position.copy(focus).addScaledVector(direction, distance * framingScale)
     camera.lookAt(focus); camera.updateProjectionMatrix(); camera.updateMatrixWorld()
   }
   const resize = () => {
@@ -469,7 +586,18 @@ export function createDeskScene(host: HTMLElement, onPick: (id: DeskItem) => voi
       direction.lerp(directions[currentView], reduced.matches ? 1 : 1 - Math.exp(-6 * delta)).normalize()
       fitCamera()
     }
-    groups.forEach((g, id) => { const target = hovered === id && id !== 'lamp' && !reduced.matches ? .18 : .04; g.position.y = THREE.MathUtils.lerp(g.position.y, target, reduced.matches ? 1 : .14) })
+    groups.forEach((g, id) => { if (id === 'robot' || id === 'backpack') return; const target = hovered === id && id !== 'lamp' && !reduced.matches ? .18 : .04; g.position.y = THREE.MathUtils.lerp(g.position.y, target, reduced.matches ? 1 : .14) })
+    robotTime = Math.min(3, robotTime + delta)
+    backpackTime = Math.min(3, backpackTime + delta)
+    const wave = reduced.matches ? 0 : Math.sin(Math.PI * Math.min(robotTime / 2.4, 1))
+    // Wave with the outer arm, away from the table, including the hand pivot.
+    robotArms[0].rotation.z = -.22 - wave * (2.3 + Math.sin(robotTime * 12) * .25)
+    robot.rotation.y = wave * .12
+    eyeMaterial.emissiveIntensity = robotActive ? 1.3 : .6
+    const bounce = reduced.matches ? 0 : Math.sin(Math.PI * Math.min(backpackTime / 1.5, 1))
+    backpack.position.y = -2.8 + Math.abs(bounce) * .48
+    backpack.rotation.z = Math.sin(backpackTime * 14) * bounce * .12
+    fabric.color.set(backpackActive ? 0x1a3263 : 0x547792)
     renderer.render(scene, camera)
   })
   return {

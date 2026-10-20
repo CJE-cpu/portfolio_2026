@@ -10,7 +10,7 @@ type Project = {
 
 const projectData: Project[] = [
   {
-    name: '게시글 작성',
+    name: '게시판',
     siteUrl: 'https://board-list-kappa.vercel.app/',
     img: '/images/projects/boardlist.png',
     skill: 'react, firebase',
@@ -23,7 +23,7 @@ const projectData: Project[] = [
     github: 'https://github.com/CJE-cpu/board_list.git',
   },
   {
-    name: '게시판',
+    name: '방명록',
     siteUrl: 'https://guestbook-evz9xl4mz-cje.vercel.app/',
     img: '/images/projects/guestbook.png',
     skill: 'react, firebase',
@@ -115,6 +115,15 @@ React·TypeScript와 Spring Boot·MySQL로 공간 탐색부터 예약까지 연�
 H2 기반 테스트로 가입·로그인·중복 이메일 거절과 로그아웃 후 인증 거절을 확인했습니다. 예약은 현재 브라우저 저장 방식이며, 서버·DB 연결을 진행할 예정입니다.`,
     team: 1,
     github: 'https://github.com/CJE-cpu/studyroom.git',
+  },
+  {
+    name: '펭귄 게임 웹사이트',
+    siteUrl: 'https://web-puce-tau-33.vercel.app/',
+    img: '/images/projects/penguingame.png',
+    skill: 'react, python',
+    description: `로그인 후 게임을 완료하면 기록을 남길 수 있는 웹사이트입니다.`,
+    team: 1,
+    github: 'https://github.com/CJE-cpu/penguingame.git',
   }
 ]
 

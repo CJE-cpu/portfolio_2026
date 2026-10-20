@@ -1,6 +1,7 @@
 @use '../../styles' as s;
 .email_row {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -9,23 +10,37 @@
     overflow-wrap: anywhere;
     user-select: text;
   }
+  .copy_button {
+    grid-column: 2;
+    grid-row: 1;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+  }
+  .message_open {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 4px;
+  }
+}
+.message_open {
+  @include s.paper-button;
+  font-size: 14px;
+  cursor: pointer;
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+    transform: none;
+  }
 }
 .copy_button {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border: 1px solid s.$color-border;
-  border-radius: 8px;
-  background: s.$color-surface;
+  @include s.paper-button;
+  font-size: 14px;
   cursor: pointer;
-  &:hover {
-    background: s.$color-accent-soft;
-  }
-  &:focus-visible {
-    outline: 2px solid s.$color-accent;
-    outline-offset: 3px;
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+    transform: none;
   }
 }
 .copy_icon {
@@ -109,6 +124,7 @@
 }
 
 .contact_form {
+  display: block;
   @include s.paper-surface;
   margin-top: s.$space-8;
   padding: clamp(20px, 4vw, 40px);
@@ -175,10 +191,41 @@
     }
   }
 }
+.contact_form_closed {
+  display: none;
+}
 .form_caption {
   font-family: s.$font-family-mono;
   color: s.$color-muted;
   margin-bottom: 16px;
+}
+.form_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  .form_caption {
+    margin: 0;
+  }
+}
+.contact_form .close_button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  flex-shrink: 0;
+  background: transparent;
+  color: s.$color-text;
+  border-color: s.$color-border;
+  box-shadow: none;
+  font-size: 26px;
+  &:hover:not(:disabled) {
+    background: s.$color-accent-soft;
+  }
+}
+.form_actions {
+  display: flex;
+  justify-content: flex-end;
 }
 .form_row {
   display: grid;
@@ -202,7 +249,7 @@
   .form_row {
     grid-template-columns: 1fr;
   }
-  .contact_form button {
+  .form_actions button {
     width: 100%;
   }
 }

@@ -3,16 +3,22 @@ import { motion, useReducedMotion } from 'motion/react'
 import type { DeskItem, DeskView } from './deskScene'
 import styles from './DeskIntro.module.scss'
 
-const items: { id: DeskItem; name: string; label: string; target?: string }[] = [
-  { id: 'book', name: '책', label: 'PROJECTS', target: 'projects' },
+const items: { id: DeskItem; name: string; label: string; target?: string; href?: string }[] = [
+  { id: 'laptop', name: '만든 프로젝트', label: 'PROJECTS', target: 'projects' },
+  { id: 'book', name: '코드 저장소 ↗', label: 'GITHUB', href: 'https://github.com/CJE-cpu' },
   { id: 'note', name: '노트', label: 'ABOUT', target: 'about' },
-  { id: 'mug', name: '머그컵', label: 'SKILLS', target: 'skills' },
+  { id: 'mug', name: '사용하는 기술', label: 'SKILLS', target: 'skills' },
   { id: 'lamp', name: '램프', label: 'LIGHT ON / OFF' },
   { id: 'postit', name: '포스트잇', label: 'CONTACT', target: 'contact' },
+  { id: 'robot', name: '로봇에게 인사', label: 'SAY HI' },
+  { id: 'backpack', name: '백팩 톡톡', label: 'TAP TO PLAY' },
 ]
 
 function DeskIcon({ name }: { name: DeskItem | DeskView }) {
   const paths = {
+    robot: 'M5 7h14v12H5V7Zm7-4v4M8 12h1m6 0h1M9 16h6M2 10v6m20-6v6',
+    backpack: 'M8 6V4h8v2M5 7h14v14H5V7Zm3 7h8v5H8v-5Z',
+    laptop: 'M4 3h16v13H4V3ZM2 19h20l-2-3H4l-2 3Z',
     book: 'M5 4h14v16H7a2 2 0 0 1-2-2V4Zm0 12h14M9 4v8m4-4h3',
     note: 'M6 3h14v18H6V3ZM3 7h5M3 12h5M3 17h5m8-10h4m-4 5h4m-4 5h4',
     mug: 'M4 8h12v9a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Zm12 1h2a3 3 0 0 1 0 6h-2M7 2v3m5-3v3',
@@ -51,6 +57,7 @@ export default function DeskIntro({ onEnter }: { onEnter: (target?: string) => v
   const [hovered, setHovered] = useState<DeskItem | null>(null)
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading')
   const [lampOn, setLampOn] = useState(true)
+  const [interaction, setInteraction] = useState('')
   const reduce = useReducedMotion()
 
   useEffect(() => {
@@ -62,7 +69,11 @@ export default function DeskIntro({ onEnter }: { onEnter: (target?: string) => v
           scene.current = createDeskScene(
             host.current,
             (id) => {
-              const target = items.find((item) => item.id === id)?.target
+              if (id === 'robot') { setInteraction('로봇이 인사합니다! 눈의 불빛도 바뀌어요.'); return }
+              if (id === 'backpack') { setInteraction('백팩이 반응했습니다! 다시 누르면 색이 돌아와요.'); return }
+              const item = items.find((item) => item.id === id)
+              if (item?.href) window.open(item.href, '_blank', 'noopener,noreferrer')
+              const target = item?.target
               if (target) enterRef.current(target)
             },
             setHovered,
@@ -129,23 +140,25 @@ export default function DeskIntro({ onEnter }: { onEnter: (target?: string) => v
         <p className={styles.hint}>
           {hovered
             ? `${items.find((item) => item.id === hovered)?.name} · ${items.find((item) => item.id === hovered)?.label}`
-            : '책 · 노트 · 머그컵 · 램프 · 포스트잇'}
+            : '노트북 · 책 · 노트 · 머그컵 · 램프 · 포스트잇'}
         </p>
       </div>
       <nav className={styles.objects} aria-label="책상 오브젝트 메뉴">
-        {items.map((item) => (
+        {items.filter((item) => item.target || item.href).map((item) => (
           <button
             key={item.id}
             type="button"
             data-object={item.id}
-            disabled={item.id === 'lamp' && state !== 'ready'}
+            aria-label={item.href ? `${item.name} · GitHub 프로필 (새 탭에서 열림)` : undefined}
+            disabled={!item.target && !item.href && state !== 'ready'}
             aria-pressed={item.id === 'lamp' ? lampOn : undefined}
             onFocus={() => scene.current?.highlight(item.id)}
             onBlur={() => scene.current?.highlight(null)}
             onMouseEnter={() => scene.current?.highlight(item.id)}
             onMouseLeave={() => scene.current?.highlight(null)}
             onClick={() => {
-              if (item.target) onEnter(item.target)
+              if (item.href) window.open(item.href, '_blank', 'noopener,noreferrer')
+              else if (item.target) onEnter(item.target)
               else scene.current?.select(item.id)
             }}
           >
@@ -160,9 +173,22 @@ export default function DeskIntro({ onEnter }: { onEnter: (target?: string) => v
             </span>
           </button>
         ))}
+        <details className={styles.playMenu}>
+          <summary>놀이 · 조명</summary>
+          <div className={styles.playOptions}>
+            {items.filter((item) => !item.target && !item.href).map((item) => (
+              <button key={item.id} type="button" disabled={state !== 'ready'}
+                aria-pressed={item.id === 'lamp' ? lampOn : undefined}
+                onClick={() => scene.current?.select(item.id)}>
+                <DeskIcon name={item.id} />
+                {item.id === 'lamp' ? (lampOn ? '램프 끄기' : '램프 켜기') : item.name}
+              </button>
+            ))}
+          </div>
+        </details>
       </nav>
       <footer className={styles.footer}>
-        <span>THINK · BUILD · PLAY</span>
+        <span role="status" aria-live="polite">{interaction || 'THINK · BUILD · PLAY'}</span>
         <span>드래그해서 둘러보기 · 물건을 클릭해 이동하기</span>
       </footer>
     </motion.main>

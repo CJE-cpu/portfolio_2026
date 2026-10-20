@@ -16,6 +16,8 @@ const Contact = () => {
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
   const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
   const configured = Boolean(serviceId && templateId && publicKey)
+  const [submitOpened, setSubmitOpened] = useState(false)
+  const openButton = useRef<HTMLButtonElement>(null)
 
   const copyLink = async () => {
     setCopyMessage('')
@@ -25,6 +27,10 @@ const Contact = () => {
     } catch {
       setCopyMessage('복사하지 못했습니다. 이메일 주소를 직접 선택해 복사해 주세요.')
     }
+  }
+
+  const openSendMessage = () => {
+    setSubmitOpened((opened) => !opened)
   }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -75,8 +81,70 @@ const Contact = () => {
         <h3>함께 일할 기회를 기다립니다.</h3>
         <p>채용 제안이나 궁금한 점을 남겨주세요. 보내주신 이메일로 답장드리겠습니다.</p>
       </div>
-      <form className={styles.contact_form} onSubmit={handleSubmit} aria-busy={pending}>
-        <p className={styles.form_caption}>A NOTE TO ME</p>
+      <div className={styles.contact_card}>
+        <div>
+          <h3>E-MAIL</h3>
+          <div className={styles.email_row}>
+            <span>jthe2817@naver.com</span>
+            <button
+              ref={openButton}
+              type="button"
+              aria-expanded={submitOpened}
+              aria-controls="contact-message-form"
+              onClick={openSendMessage}
+              className={styles.message_open}
+            >
+              {submitOpened ? '닫기' : '메일 보내기'}
+            </button>
+            <button
+              type="button"
+              className={styles.copy_button}
+              onClick={copyLink}
+              aria-label="이메일 주소 복사"
+              title="이메일 주소 복사"
+            >
+              <img className={styles.copy_icon} src={copyIcon} alt="" width="24" height="24" />
+            </button>
+          </div>
+          <p className={styles.copy_status} role="status" aria-live="polite">
+            {copyMessage}
+          </p>
+        </div>
+        <div>
+          <h3>GITHUB</h3>
+          <a
+            href="https://github.com/CJE-cpu"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="CJE-cpu GitHub (새 탭에서 열림)"
+          >
+            <span className={styles.contact_link_label}>
+              <img className={styles.contact_icon} src={githubIcon} alt="" width="24" height="24" />
+              <span>github.com/CJE-cpu</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <form
+        id="contact-message-form"
+        className={submitOpened ? styles.contact_form : styles.contact_form_closed}
+        onSubmit={handleSubmit}
+        aria-busy={pending}
+      >
+        <div className={styles.form_header}>
+          <p className={styles.form_caption}>A NOTE TO ME</p>
+          <button
+            className={styles.close_button}
+            type="button"
+            aria-label="문의 폼 닫기"
+            onClick={() => {
+              setSubmitOpened(false)
+              openButton.current?.focus()
+            }}
+          >
+            ×
+          </button>
+        </div>
         <fieldset disabled={pending}>
           <legend>문의 내용</legend>
           <div className={styles.form_row}>
@@ -121,9 +189,11 @@ const Contact = () => {
           <p className={styles.form_note}>
             입력한 이름, 이메일, 메시지는 문의 전달을 위해 EmailJS로 전송됩니다.
           </p>
-          <button type="submit" disabled={!configured || pending}>
-            {pending ? '보내는 중…' : '메시지 보내기 ↗'}
-          </button>
+          <div className={styles.form_actions}>
+            <button type="submit" disabled={!configured || pending}>
+              {pending ? '보내는 중…' : '메일 보내기'}
+            </button>
+          </div>
         </fieldset>
         {!configured && (
           <p className={styles.form_note}>폼 전송을 준비 중입니다. 아래 이메일로 연락해 주세요.</p>
@@ -132,40 +202,6 @@ const Contact = () => {
           {status}
         </p>
       </form>
-      <div className={styles.contact_card}>
-        <div>
-          <h3>E-MAIL</h3>
-          <div className={styles.email_row}>
-            <span>jthe2817@naver.com</span>
-            <button
-              type="button"
-              className={styles.copy_button}
-              onClick={copyLink}
-              aria-label="이메일 주소 복사"
-              title="이메일 주소 복사"
-            >
-              <img className={styles.copy_icon} src={copyIcon} alt="" width="24" height="24" />
-            </button>
-          </div>
-          <p className={styles.copy_status} role="status" aria-live="polite">
-            {copyMessage}
-          </p>
-        </div>
-        <div>
-          <h3>GITHUB</h3>
-          <a
-            href="https://github.com/CJE-cpu"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="CJE-cpu GitHub (새 탭에서 열림)"
-          >
-            <span className={styles.contact_link_label}>
-              <img className={styles.contact_icon} src={githubIcon} alt="" width="24" height="24" />
-              <span>github.com/CJE-cpu</span>
-            </span>
-          </a>
-        </div>
-      </div>
     </div>
   )
 }
